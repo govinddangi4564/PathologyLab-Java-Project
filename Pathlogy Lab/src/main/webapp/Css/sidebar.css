@@ -1,29 +1,29 @@
 @charset "UTF-8";
 
 :root {
-	--primary-color: #0b7a75;
-	--primary-hover: #0a6662;
-	--secondary-color: #64748b;
+	--primary-color: #2563eb;
+	--primary-hover: #1d4ed8;
+	--secondary-color: #6b7280;
 	--glass-bg: rgba(255, 255, 255, 0.92);
 	--glass-border: rgba(255, 255, 255, 0.3);
 	--card-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-	--input-focus: rgba(11, 122, 117, 0.2);
-	--user-sidebar-bg: #07111e;
-	--user-sidebar-panel: #0c1726;
-	--user-sidebar-hover: #15263c;
-	--user-sidebar-active: #0b7a75;
-	--user-sidebar-text: #ced9e8;
+	--input-focus: rgba(37, 99, 235, 0.2);
+	--user-sidebar-bg: #1a202c;
+	--user-sidebar-panel: #111827;
+	--user-sidebar-hover: #1f2937;
+	--user-sidebar-active: #2563eb;
+	--user-sidebar-text: #d1d5db;
 	--user-sidebar-text-active: #ffffff;
 	--user-topbar-bg: rgba(248, 250, 252, 0.96);
-	--user-icon-muted: #86bdf8;
-	--user-divider: #1b2a40;
+	--user-icon-muted: #9ca3af;
+	--user-divider: #374151;
 	--sidebar-width: 260px;
 }
 
 body {
 	background: radial-gradient(circle at top right, #f0f9ff 0%, #e0f2fe 50%, #f1f5f9
 		100%);
-	font-family: 'Outfit', sans-serif;
+	font-family: "Outfit", sans-serif;
 	min-height: 100vh;
 	color: #1e293b;
 	margin: 0;
@@ -212,11 +212,11 @@ body {
 	width: 40px;
 	height: 40px;
 	border-radius: 10px;
-	background: linear-gradient(135deg, #ccfbf1 0%, #99f6e4 100%);
+	background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color: #0f766e;
+	color: #1e40af;
 }
 
 /* Dashboard Content */
@@ -275,7 +275,7 @@ to {
 .glass-card-header .icon-circle {
 	width: 60px;
 	height: 60px;
-	background: linear-gradient(135deg, #e6fffb 0%, #d1fae5 100%);
+	background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
 	border-radius: 50%;
 	display: flex;
 	align-items: center;
@@ -283,7 +283,7 @@ to {
 	color: var(--primary-color);
 	font-size: 1.5rem;
 	margin-right: 1.5rem;
-	box-shadow: 0 10px 20px rgba(11, 122, 117, 0.1);
+	box-shadow: 0 10px 20px rgba(37, 99, 235, 0.1);
 }
 
 .glass-card-header h4 {

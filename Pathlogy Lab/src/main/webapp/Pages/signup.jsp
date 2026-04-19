@@ -116,7 +116,7 @@ h1, h2, h3, h4, h5 {
 							<div
 								class="d-flex justify-content-between align-items-center mb-3">
 								<h4 class="fw-bold mb-0">Create Account</h4>
-								<a class="back-link" href="../index.jsp">Back to Home</a>
+								<a class="back-link" href="../index.jsp">← Back</a>
 							</div>
 
 							<form method="post"

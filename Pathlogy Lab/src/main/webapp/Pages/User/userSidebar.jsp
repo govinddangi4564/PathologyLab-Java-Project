@@ -1,3 +1,4 @@
+<%@page import="com.pathology.model.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page session="false"%>
@@ -13,11 +14,24 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 	rel="stylesheet">
 
-<link rel="stylesheet" type="text/css" href="../../Css/sidebar.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/Css/sidebar.css">
 
 </head>
 
 <body>
+
+	<%
+	HttpSession session = request.getSession(false);
+
+	if (session == null || session.getAttribute("userObj") == null) {
+		response.sendRedirect(request.getContextPath() + "/login");
+		return;
+	}
+	User u = (User) session.getAttribute("userObj");
+
+	response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+	%>
+
 
 	<div class="sidebar" id="userSidebar">
 		<div class="sidebar-header">
@@ -26,9 +40,9 @@
 			</h3>
 		</div>
 
-		<span class="nav-label">Main Menu</span> <a href="#" class="active">
-			<i class="fa-solid fa-user"></i> My Profile
-		</a> <a href="#"> <i class="fa-solid fa-file-medical"></i> My Reports
+		<span class="nav-label">Main Menu</span> <a href="${pageContext.request.contextPath}/Pages/User/user-dashboard.jsp" class="active">
+			<i class="fa-solid fa-user"></i> Dashboard
+		</a> <a href="${pageContext.request.contextPath}/userViewReports"> <i class="fa-solid fa-file-medical"></i> My Reports
 		</a> <a href="#"> <i class="fa-solid fa-calendar-check"></i>
 			Appointments
 		</a> <span class="nav-label">Settings</span> <a href="#"> <i
@@ -36,7 +50,7 @@
 		</a>
 
 		<div class="bottom-nav">
-			<a href="#" class="logout-link"> <i
+			<a href="${pageContext.request.contextPath}/logout" class="logout-link"> <i
 				class="fa-solid fa-right-from-bracket"></i> Logout
 			</a>
 		</div>
@@ -57,9 +71,9 @@
 			<div class="profile-section">
 				<div class="profile-info">
 					<div class="profile-name">
-						<!-- name -->
+						<%=u.getName()%>
 					</div>
-					<div class="profile-role">Super Admin</div>
+					<div class="profile-role">User</div>
 				</div>
 				<div class="profile-img">
 					<i class="fa-solid fa-user-shield"></i>

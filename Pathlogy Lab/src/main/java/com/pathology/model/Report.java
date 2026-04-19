@@ -18,6 +18,8 @@ public class Report {
 	private Date reportDate;
 	private String status;
 
+	private String patientName;
+
 	public Report(int userId, String patientId, String reportName, String reportPath, String status) {
 		super();
 		this.userId = userId;
@@ -36,5 +38,29 @@ public class Report {
 		this.reportDate = reportDate;
 		this.status = status;
 	}
+
+	public Report(int id, String reportName, String reportPath, Date reportDate, String status, String patientName) {
+		super();
+		this.id = id;
+		this.reportName = reportName;
+		this.reportPath = reportPath;
+		this.reportDate = reportDate;
+		this.status = status;
+		this.patientName = patientName;
+	}
+
+	public Report(int id, String patientId, String reportName, String reportPath, Date reportDate, String status,
+			String patientName) {
+		super();
+		this.id = id;
+		this.patientId = patientId;
+		this.reportName = reportName;
+		this.reportPath = reportPath;
+		this.reportDate = reportDate;
+		this.status = status;
+		this.patientName = patientName;
+	}
+	
+	
 
 }

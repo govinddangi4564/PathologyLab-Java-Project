@@ -187,9 +187,9 @@
 					<h5>Quick Actions</h5>
 					<div class="quick-actions">
 						<a href="uploadReport.jsp" class="btn btn-primary btn-sm">Upload
-							Report</a> <a href="viewAllReports.jsp"
+							Report</a> <a href="${pageContext.request.contextPath}/viewAllReports"
 							class="btn btn-outline-primary btn-sm">Review Reports</a> <a
-							href="getCandidate" class="btn btn-outline-secondary btn-sm">Patient
+							href="${pageContext.request.contextPath}/viewPatients" class="btn btn-outline-secondary btn-sm">Patient
 							List</a>
 					</div>
 				</div>

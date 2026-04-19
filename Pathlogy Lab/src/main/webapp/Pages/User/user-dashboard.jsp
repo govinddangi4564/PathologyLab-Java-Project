@@ -26,12 +26,14 @@
 
 <body>
 
-	<%@ include file="userSidebar.jsp" %>
+	<%@ include file="userSidebar.jsp"%>
 
 	<!-- Main Content -->
 	<div class="main-content">
 		<div class="dashboard-header">
-			<h2>Welcome Back, John!</h2>
+			<h2>
+				Welcome Back,
+				<%=u.getName()%></h2>
 			<p>View and manage your personal details and medical reports.</p>
 		</div>
 
@@ -49,20 +51,12 @@
 					</div>
 
 					<div class="detail-grid">
-						<!-- User ID -->
-						<div class="detail-item">
-							<div class="detail-label">
-								<i class="fa-solid fa-hashtag"></i> Patient ID
-							</div>
-							<div class="detail-value">USR-98542</div>
-						</div>
-
 						<!-- Name -->
 						<div class="detail-item">
 							<div class="detail-label">
 								<i class="fa-solid fa-user"></i> Full Name
 							</div>
-							<div class="detail-value">John Doe</div>
+							<div class="detail-value"><%=u.getName()%></div>
 						</div>
 
 						<!-- Email -->
@@ -70,7 +64,7 @@
 							<div class="detail-label">
 								<i class="fa-solid fa-envelope"></i> Email Address
 							</div>
-							<div class="detail-value">johndoe@example.com</div>
+							<div class="detail-value"><%=u.getEmail()%></div>
 						</div>
 
 						<!-- Mobile -->
@@ -78,25 +72,7 @@
 							<div class="detail-label">
 								<i class="fa-solid fa-phone"></i> Mobile Number
 							</div>
-							<div class="detail-value">+1 (555) 123-4567</div>
-						</div>
-
-						<!-- Role -->
-						<div class="detail-item">
-							<div class="detail-label">
-								<i class="fa-solid fa-shield-halved"></i> Account Role
-							</div>
-							<div class="detail-value">
-								<span class="status-badge">USER</span>
-							</div>
-						</div>
-
-						<!-- Created At -->
-						<div class="detail-item">
-							<div class="detail-label">
-								<i class="fa-solid fa-calendar-alt"></i> Joined Date
-							</div>
-							<div class="detail-value">15 Oct 2023, 10:30 AM</div>
+							<div class="detail-value"><%=u.getMobile()%></div>
 						</div>
 					</div>
 				</div>

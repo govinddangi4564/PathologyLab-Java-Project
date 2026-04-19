@@ -31,7 +31,6 @@
 	}
 
 	User u = (User) session.getAttribute("userObj");
-	String name = u.getName();
 
 	// Prevent back button after logout
 	response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -83,7 +82,7 @@
 			<div class="profile-section">
 				<div class="profile-info">
 					<div class="profile-name">
-						<!-- name -->
+						<%=u.getName() %>
 					</div>
 					<div class="profile-role">Super Admin</div>
 				</div>

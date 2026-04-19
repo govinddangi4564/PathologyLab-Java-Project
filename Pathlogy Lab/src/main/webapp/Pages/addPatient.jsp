@@ -241,6 +241,7 @@ to {
 		}
 		%>
 
+		<a href="managePatients.jsp" class="btn">← Back</a>
 		<div class="upload-container">
 			<div class="glass-card">
 

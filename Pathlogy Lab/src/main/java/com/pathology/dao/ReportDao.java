@@ -13,6 +13,8 @@ import com.pathology.model.Report;
 
 public class ReportDao {
 
+	// ------------ ADMIN ---------------------
+
 	public int uploadReport(Report r) {
 		int i = 0;
 
@@ -63,7 +65,8 @@ public class ReportDao {
 		List<Report> list = new LinkedList<Report>();
 
 		try (Connection con = DBConnection.getConnection();
-				PreparedStatement pst = con.prepareStatement("select * from reports where patient_id = ?")) {
+				PreparedStatement pst = con.prepareStatement(
+						"SELECT r.*, p.patient_name FROM reports r JOIN patients p ON r.patient_id = p.patient_uid WHERE r.patient_id = ?")) {
 
 			pst.setString(1, pId);
 
@@ -72,12 +75,13 @@ public class ReportDao {
 			while (rs.next()) {
 				int id = rs.getInt("id");
 				String patientId = rs.getString("patient_id");
+				String patientName = rs.getString("patient_name");
 				String report = rs.getString("report_name");
 				String path = rs.getString("file_path");
 				Date dt = rs.getDate("upload_date");
 				String status = rs.getString("status");
 
-				list.add(new Report(id, patientId, report, path, dt, status));
+				list.add(new Report(id, patientId, report, path, dt, status, patientName));
 			}
 
 		} catch (SQLException e) {
@@ -172,6 +176,36 @@ public class ReportDao {
 			e.printStackTrace();
 		}
 		return count;
+	}
+
+	// ------------------------- USER / PATIENT------------------------
+
+	public List<Report> reportList(String email) {
+		List<Report> list = new LinkedList<Report>();
+
+		try (Connection con = DBConnection.getConnection();
+				PreparedStatement pst = con.prepareStatement(
+						"SELECT r.id AS report_id, p.patient_name, r.report_name, r.file_path, r.status, r.upload_date FROM patients p JOIN reports r ON p.patient_uid = r.patient_id WHERE p.patient_email = ?")) {
+
+			pst.setString(1, email);
+
+			ResultSet rs = pst.executeQuery();
+
+			while (rs.next()) {
+				int rId = rs.getInt("report_id");
+				String patientName = rs.getString("patient_name");
+				String report = rs.getString("report_name");
+				String reportPath = rs.getString("file_path");
+				String status = rs.getString("status");
+				Date dt = rs.getDate("upload_date");
+
+				list.add(new Report(rId, report, reportPath, dt, status, patientName));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 }

@@ -1,3 +1,5 @@
+<%@page import="com.pathology.model.Report"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -107,56 +109,22 @@ body {
 
 <body data-admin-page="reports">
 
-	<%@ include file="adminSidebar.jsp"%>
+	<%@ include file="userSidebar.jsp"%>
 
 	<%
 	List<Report> list = (List<Report>) request.getAttribute("reportList");
 	%>
 
-	<%
-	ReportDao dao = new ReportDao();
-	int totalReport = dao.totalReports();
-	int pending = dao.totalPendingReports();
-	int complete = dao.totalCompletedReports();
-	int delivered = dao.totalDeliveredReports();
-	%>
 
 	<div class="main-content">
-
-		<%
-		String msg = (String) session.getAttribute("msg");
-		if (msg != null) {
-		%>
-		<div id="alertMsg"
-			class="alert alert-success alert-dismissible fade show" role="alert">
-			<%=msg%>
-			<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-		</div>
-		<%
-		session.removeAttribute("msg");
-		}
-		%>
 		<h2 class="page-title">All Reports</h2>
 		<p class="page-subtitle">Review uploaded records, check statuses,
-			and take admin actions.</p>
+			and download Reports.</p>
 
 		<div class="summary-grid">
 			<div class="summary-box">
 				<div class="title">Total Reports</div>
-				<div class="count"><%=totalReport%></div>
-			</div>
-
-			<div class="summary-box">
-				<div class="title">Pending Reports</div>
-				<div class="count"><%=pending%></div>
-			</div>
-			<div class="summary-box">
-				<div class="title">Complete Reports</div>
-				<div class="count"><%=complete%></div>
-			</div>
-			<div class="summary-box">
-				<div class="title">Delivered reports</div>
-				<div class="count"><%=delivered%></div>
+				<div class="count">5</div>
 			</div>
 		</div>
 
@@ -191,7 +159,7 @@ body {
 				<thead>
 					<tr>
 						<th>S.No</th>
-						<th>Patient ID</th>
+						<th>Patient Name</th>
 						<th>Report Name</th>
 						<th>Date</th>
 						<th>Status</th>
@@ -209,18 +177,14 @@ body {
 				<tbody id="reportTable">
 					<tr>
 						<td><%=count++%></td>
-						<td><%=r.getPatientId()%></td>
+						<td><%=r.getPatientName()%></td>
 						<td><%=r.getReportName()%></td>
 						<td><%=r.getReportDate()%></td>
 						<td><span class="badge-soft badge-published"> <%=r.getStatus()%>
 						</span></td>
 
 						<td><a href="downloadReport?file=/<%=r.getReportPath()%>"
-							class="btn btn-success btn-sm"> Download </a> <a
-							href="deleteReport?id=<%=r.getId()%>"
-							class="btn btn-outline-danger btn-sm"
-							onclick="return confirm('Are you sure you want to delete this report?');">
-								Delete </a></td>
+							class="btn btn-success btn-sm"> Download </a></td>
 					</tr>
 				</tbody>
 

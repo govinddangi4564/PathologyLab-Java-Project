@@ -232,8 +232,10 @@ body {
 	%>
 	
 	<%@ include file="adminSidebar.jsp"%>
+	
 
-	<div class="main-content" style="margin-left: 260px; padding: 32px;">
+	<div class="main-content">
+	<a href="${pageContext.request.contextPath}/Pages/managePatients.jsp" class="btn">← Back</a>
 
 		<%
 		String msg = (String) session.getAttribute("msg");
@@ -330,7 +332,6 @@ body {
 					}
 					%>
 
-					</tbody>
 				</table>
 			</div>
 		</div>
