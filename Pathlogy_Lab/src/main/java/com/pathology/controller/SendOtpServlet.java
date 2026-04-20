@@ -81,7 +81,7 @@ public class SendOtpServlet extends HttpServlet {
 			response.sendRedirect("./Pages/verifyOtp.jsp");
 
 		} catch (MessagingException e) {
-
+			e.printStackTrace();
 		}
 	}
 

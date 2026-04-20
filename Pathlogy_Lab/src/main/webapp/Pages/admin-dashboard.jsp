@@ -121,12 +121,29 @@
 
 	<%@ include file="adminSidebar.jsp"%>
 
+	<%
+	String success = (String) session.getAttribute("successMsg");
+	String error = (String) session.getAttribute("errorMsg");
 
+	if (success != null) {
+	%>
+	<div class="alert alert-success"><%=success%></div>
+	<%
+	session.removeAttribute("successMsg");
+	}
+
+	if (error != null) {
+	%>
+	<div class="alert alert-danger"><%=error%></div>
+	<%
+	session.removeAttribute("errorMsg");
+	}
+	%>
 
 	<%
 	PatientDao pdao = new PatientDao();
 	ReportDao rdao = new ReportDao();
-	
+
 	int patient = pdao.totalPatients();
 	int report = rdao.totalReports();
 	int pendingReport = rdao.totalPendingReports();
@@ -155,13 +172,12 @@
 			</div>
 			<div class="stat-card">
 				<p class="label mb-0">Today's Uploads</p>
-				<p class="value">null
-				</p>
+				<p class="value">null</p>
 				<div class="meta">12 pending review</div>
 			</div>
 			<div class="stat-card">
 				<p class="label mb-0">Pending Reports</p>
-				<p class="value"><%=pendingReport %></p>
+				<p class="value"><%=pendingReport%></p>
 				<div class="meta">Needs action today</div>
 			</div>
 		</div>
@@ -187,10 +203,11 @@
 					<h5>Quick Actions</h5>
 					<div class="quick-actions">
 						<a href="uploadReport.jsp" class="btn btn-primary btn-sm">Upload
-							Report</a> <a href="${pageContext.request.contextPath}/viewAllReports"
+							Report</a> <a
+							href="${pageContext.request.contextPath}/viewAllReports"
 							class="btn btn-outline-primary btn-sm">Review Reports</a> <a
-							href="${pageContext.request.contextPath}/viewPatients" class="btn btn-outline-secondary btn-sm">Patient
-							List</a>
+							href="${pageContext.request.contextPath}/viewPatients"
+							class="btn btn-outline-secondary btn-sm">Patient List</a>
 					</div>
 				</div>
 			</div>

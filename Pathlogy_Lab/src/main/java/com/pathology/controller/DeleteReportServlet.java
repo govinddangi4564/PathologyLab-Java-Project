@@ -27,13 +27,12 @@ public class DeleteReportServlet extends HttpServlet {
 		int i = dao.deleteReport(id);
 
 		if (i != 0) {
-			request.getSession().setAttribute("msg", "Report deleted successfully");
+			request.setAttribute("msg", "Report deleted successfully");
 		} else {
-			request.getSession().setAttribute("msg", "Delete failed");
+			request.setAttribute("msg", "Delete failed");
 		}
 
-		response.sendRedirect("viewAllReports");
-
+		request.getRequestDispatcher("viewAllReports").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

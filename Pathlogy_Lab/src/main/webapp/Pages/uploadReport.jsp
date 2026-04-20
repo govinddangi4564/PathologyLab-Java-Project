@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 <meta charset="UTF-8">
-<title>Add patient</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upload Report | Admin Panel</title>
+
 <!-- Google Fonts -->
 <link
 	href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
@@ -228,20 +230,14 @@ to {
 	<div class="main-content">
 
 		<%
-		String msg = (String) session.getAttribute("msg");
+		String msg = (String) request.getAttribute("msg");
 		if (msg != null) {
 		%>
-		<div id="alertMsg"
-			class="alert alert-success alert-dismissible fade show" role="alert">
-			<%=msg%>
-			<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-		</div>
+		<div class="alert alert-info"><%=msg%></div>
 		<%
-		session.removeAttribute("msg");
 		}
 		%>
 
-		<a href="managePatients.jsp" class="btn">← Back</a>
 		<div class="upload-container">
 			<div class="glass-card">
 
@@ -249,51 +245,96 @@ to {
 					<div class="icon-circle">
 						<i class="fas fa-file-medical"></i>
 					</div>
-					<h2>Add Patient</h2>
-					<p>Enter patient details for patient portal access.</p>
+					<h2>Upload Patient Report</h2>
+					<p>Enter patient details and upload report file for patient
+						portal access.</p>
 				</div>
 
-				<form action="${pageContext.request.contextPath}/addPatient"
-					method="post">
+				<form action="${pageContext.request.contextPath}/uploadReport"
+					method="post" enctype="multipart/form-data">
 					<div class="row g-4">
+
 						<div class="col-md-6">
-							<label class="form-label">Full Name</label> <input type="text"
-								name="patientName" class="form-control"
-								placeholder="Enter Patient Name" required>
+							<label class="form-label">Patient id</label> <input type="text"
+								name="patientId" class="form-control"
+								placeholder="Enter Patient Id" required>
 						</div>
 
 						<div class="col-md-6">
-							<label class="form-label">Email Address</label> <input
-								type="email" name="email" class="form-control"
-								placeholder="Enter Patient Email">
+							<label class="form-label">Report Type / Name</label> <select
+								name="reportName" class="form-control" required>
+								<option value="" disabled selected>Select Report Type</option>
+								<option value="Blood Test">Blood Test</option>
+								<option value="X-Ray">X-Ray</option>
+								<option value="MRI Scan">MRI Scan</option>
+								<option value="CT Scan">CT Scan</option>
+								<option value="Ultrasound">Ultrasound</option>
+								<option value="Urine Test">Urine Test</option>
+								<option value="Biopsy">Biopsy</option>
+								<option value="ECG">ECG</option>
+								<option value="Other">Other</option>
+							</select>
 						</div>
 
 						<div class="col-md-6">
-							<label class="form-label">Mobile Number</label> <input type="tel"
-								name="mobile" class="form-control"
-								placeholder="Enter Patient Mobile Number">
+							<label class="form-label">Report Status</label> <select
+								name="reportStatus" class="form-control" required>
+								<option value="" disabled selected>Select Report Status</option>
+								<option value="Pending">Pending</option>
+								<option value="Completed">Completed</option>
+								<option value="Delivered">Delivered</option>
+							</select>
+						</div>
+
+						<div class="col-12 mt-4">
+							<label class="form-label">Report Document (PDF/Image)</label>
+							<div class="file-upload-wrapper">
+								<i class="fas fa-cloud-upload-alt"></i>
+								<h5>Click to select or drag and drop</h5>
+								<p class="text-muted mb-0">PDF, PNG, JPG (Max 5MB)</p>
+								<input type="file" name="reportFile" class="file-upload-input"
+									id="reportFile" required onchange="updateFileName()">
+								<div id="file-name-display" class="file-name"></div>
+							</div>
 						</div>
 					</div>
 
 					<div class="text-center">
-						<button type="submit" class="btn btn-upload">Submit
-							details</button>
+						<button type="submit" class="btn btn-upload">
+							<i class="fas fa-paper-plane me-2"></i> Upload Report
+						</button>
 					</div>
+
+					<div class="admin-note">Admin only: verify patient ID and
+						report date before submitting.</div>
 				</form>
+
 			</div>
 		</div>
 	</div>
 
 	<script>
-setTimeout(function() {
-    let alert = document.getElementById("alertMsg");
-    if (alert) {
-        alert.classList.remove("show");
-        alert.classList.add("fade");
-        setTimeout(() => alert.remove(), 500);
-    }
-}, 3000); // 3 seconds
-</script>
+		function updateFileName() {
+			const fileInput = document.getElementById('reportFile');
+			const fileNameDisplay = document
+					.getElementById('file-name-display');
+			if (fileInput.files.length > 0) {
+				fileNameDisplay.textContent = 'Selected: '
+						+ fileInput.files[0].name;
+			} else {
+				fileNameDisplay.textContent = '';
+			}
+		}
+		
+		setTimeout(function() {
+		    let alert = document.getElementById("alertMsg");
+		    if (alert) {
+		        alert.classList.remove("show");
+		        alert.classList.add("fade");
+		        setTimeout(() => alert.remove(), 500);
+		    }
+		}, 3000); // 3 seconds
+	</script>
 
 </body>
 

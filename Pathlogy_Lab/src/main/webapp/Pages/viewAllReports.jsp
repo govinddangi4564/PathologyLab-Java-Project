@@ -130,18 +130,14 @@ body {
 	<div class="main-content">
 
 		<%
-		String msg = (String) session.getAttribute("msg");
+		String msg = (String) request.getAttribute("msg");
 		if (msg != null) {
 		%>
-		<div id="alertMsg"
-			class="alert alert-success alert-dismissible fade show" role="alert">
-			<%=msg%>
-			<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-		</div>
+		<div class="alert alert-info"><%=msg%></div>
 		<%
-		session.removeAttribute("msg");
 		}
 		%>
+
 		<h2 class="page-title">All Reports</h2>
 		<p class="page-subtitle">Review uploaded records, check statuses,
 			and take admin actions.</p>

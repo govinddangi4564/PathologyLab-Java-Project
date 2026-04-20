@@ -29,6 +29,7 @@
 </head>
 
 <body>
+
 	<nav class="navbar navbar-expand-lg sticky-top top-nav">
 		<div class="container py-2">
 			<a class="navbar-brand fw-bold" href="#">Pathology Lab</a>

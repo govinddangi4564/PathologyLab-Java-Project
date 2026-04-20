@@ -225,29 +225,23 @@ body {
 	<%
 	List<Patient> list = (List<Patient>) request.getAttribute("reportList");
 	%>
-	
+
 	<%
 	PatientDao dao = new PatientDao();
 	int totalPatient = dao.totalPatients();
 	%>
-	
+
 	<%@ include file="adminSidebar.jsp"%>
-	
+
 
 	<div class="main-content">
-	<a href="${pageContext.request.contextPath}/Pages/managePatients.jsp" class="btn">← Back</a>
 
 		<%
-		String msg = (String) session.getAttribute("msg");
+		String msg = (String) request.getAttribute("msg");
 		if (msg != null) {
 		%>
-		<div class="alert alert-success alert-dismissible fade show"
-			role="alert">
-			<%=msg%>
-			<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-		</div>
+		<div class="alert alert-info"><%=msg%></div>
 		<%
-		session.removeAttribute("msg");
 		}
 		%>
 
@@ -261,7 +255,7 @@ body {
 			<div class="table-header-row">
 				<div class="summary-box">
 					<div class="title">Total Patients</div>
-					<div class="count"><%=totalPatient %></div>
+					<div class="count"><%=totalPatient%></div>
 				</div>
 				<div class="search-box">
 					<i class="fa-solid fa-search"></i> <input type="text"

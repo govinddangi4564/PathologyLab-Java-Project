@@ -11,6 +11,28 @@ import com.pathology.model.User;
 
 public class UserDao {
 
+	public boolean isEmailExists(String email) {
+		boolean exists = false;
+
+		try {
+			Connection con = DBConnection.getConnection();
+			String sql = "SELECT * FROM users WHERE email = ?";
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.setString(1, email);
+
+			var rs = ps.executeQuery();
+
+			if (rs.next()) {
+				exists = true;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return exists;
+	}
+
 	public int signup(User u) {
 		int i = 0;
 

@@ -43,15 +43,15 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("userObj", user);
 
 			if ("USER".equals(role)) {
-				session.setAttribute("msg", "Login Successful");
+				session.setAttribute("successMsg", "Login Successful");
 				response.sendRedirect("Pages/User/user-dashboard.jsp");
 			} else {
-				session.setAttribute("msg", "Login Successful");
+				session.setAttribute("successMsg", "Login Successful");
 				response.sendRedirect("Pages/admin-dashboard.jsp");
 			}
 
 		} else {
-			session.setAttribute("msg", "Invalid Credentials");
+			session.setAttribute("errorMsg", "Invalid Credentials");
 			response.sendRedirect("./Pages/login.jsp");
 		}
 	}

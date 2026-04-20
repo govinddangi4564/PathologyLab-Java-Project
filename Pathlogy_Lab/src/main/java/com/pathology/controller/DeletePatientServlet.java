@@ -25,16 +25,16 @@ public class DeletePatientServlet extends HttpServlet {
 		String pId = request.getParameter("pId");
 		PatientDao dao = new PatientDao();
 
-		
 		int i = dao.deletePatient(pId);
 
 		if (i != 0) {
-			request.getSession().setAttribute("msg", "Patient deleted successfully");
+			request.setAttribute("msg", "Patient deleted successfully");
 		} else {
-			request.getSession().setAttribute("msg", "Delete failed");
+			request.setAttribute("msg", "Delete failed");
 		}
 
-		response.sendRedirect("viewPatients");
+		request.getRequestDispatcher("viewPatients").forward(request, response);
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

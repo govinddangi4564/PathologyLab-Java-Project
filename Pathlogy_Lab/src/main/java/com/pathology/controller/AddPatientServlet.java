@@ -34,15 +34,14 @@ public class AddPatientServlet extends HttpServlet {
 		Patient p = new Patient(name, email, mobile);
 
 		int i = dao.addPatient(p);
-
+		
 		if (i != 0) {
-			request.getSession().setAttribute("msg", "Patient Added successfully");
+			request.setAttribute("msg", "Patient Added successfully");
 		} else {
-			request.getSession().setAttribute("msg", "Something Went Wrong.");
+			request.setAttribute("msg", "Something Went Wrong.");
 		}
 
-		response.sendRedirect("./Pages/addPatient.jsp");
-
+		request.getRequestDispatcher("./Pages/addPatient.jsp").forward(request, response);
 	}
 
 }

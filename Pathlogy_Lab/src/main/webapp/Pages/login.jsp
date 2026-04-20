@@ -150,17 +150,16 @@ h1, h2, h3, h4, h5 {
 <body>
 
 	<%
-	HttpSession session = request.getSession(false);
-	String msg = (String) session.getAttribute("msg");
+	String msg = (String) request.getAttribute("msg");
+	%>
+
+	<%
 	if (msg != null) {
 	%>
-	<div id="alertMsg"
-		class="alert alert-success alert-dismissible fade show" role="alert">
+	<div class="alert alert-danger text-center" role="alert">
 		<%=msg%>
-		<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
 	</div>
 	<%
-	session.removeAttribute("msg");
 	}
 	%>
 

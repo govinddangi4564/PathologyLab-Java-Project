@@ -53,10 +53,10 @@ public class UpdatePasswordServlet extends HttpServlet {
 
 		if (i != 0) {
 			session.removeAttribute("email");
-			session.setAttribute("msg", "Password Updated Successfully");
+			session.setAttribute("successMsg", "Password Updated Successfully");
 			response.sendRedirect(request.getContextPath() + "./Pages/login.jsp");
 		} else {
-			session.setAttribute("msg", "Failed to update password");
+			session.setAttribute("errorMsg", "Failed to update password");
 			response.sendRedirect("./Pages/updatePassword.jsp");
 		}
 	}

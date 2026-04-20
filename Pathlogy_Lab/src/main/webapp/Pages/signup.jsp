@@ -107,6 +107,26 @@ h1, h2, h3, h4, h5 {
 </head>
 
 <body>
+
+	<%
+	String success = (String) session.getAttribute("successMsg");
+	String error = (String) session.getAttribute("errorMsg");
+
+	if (success != null) {
+	%>
+	<div class="alert alert-success"><%=success%></div>
+	<%
+	session.removeAttribute("successMsg");
+	}
+
+	if (error != null) {
+	%>
+	<div class="alert alert-danger"><%=error%></div>
+	<%
+	session.removeAttribute("errorMsg");
+	}
+	%>
+
 	<div class="auth-wrap">
 		<div class="container">
 			<div class="row justify-content-center">

@@ -57,13 +57,11 @@ public class UploadReport extends HttpServlet {
 		int i = dao.uploadReport(r);
 
 		if (i != 0) {
-			request.getSession().setAttribute("msg", "Report update successfully");
+			request.setAttribute("msg", "Report update successfully");
 		} else {
-			request.getSession().setAttribute("msg", "Something Went Wrong.");
+			request.setAttribute("msg", "Something Went Wrong.");
 		}
-
-		response.sendRedirect("./Pages/uploadReport.jsp");
-
+		request.getRequestDispatcher("./Pages/uploadReport.jsp").forward(request, response);
 	}
 
 }

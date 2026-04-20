@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -41,11 +43,20 @@ public class SignUpServlet extends HttpServlet {
 
 		int i = dao.signup(us);
 
+		HttpSession session = request.getSession();
+
+		if (dao.isEmailExists(email)) {
+			session.setAttribute("errorMsg", "Email already registered");
+			response.sendRedirect("signup.jsp");
+			return;
+		}
+
 		if (i != 0) {
+			session.setAttribute("successMsg", "Registration Successful. Please login.");
 			response.sendRedirect(request.getContextPath() + "/Pages/login.jsp");
 		} else {
-			response.setContentType("text/html");
-			response.getWriter().println("<h3 style='color:red;'>Something went wrong</h3>");
+			session.setAttribute("errorMsg", "Something went wrong. Try again.");
+			response.sendRedirect(request.getContextPath() + "/Pages/signup.jsp");
 		}
 
 	}
