@@ -125,20 +125,6 @@ h1, h2, h3, h4, h5 {
 </head>
 
 <body>
-	<%
-	String msg = (String) session.getAttribute("msg");
-	if (msg != null) {
-	%>
-	<div id="alertMsg"
-		class="alert alert-success alert-dismissible fade show" role="alert">
-		<%=msg%>
-		<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-	</div>
-	<%
-	session.removeAttribute("msg");
-	}
-	%>
-
 	<div class="auth-wrap">
 		<div class="container">
 			<div class="row justify-content-center">
@@ -150,6 +136,8 @@ h1, h2, h3, h4, h5 {
 								<h4 class="fw-bold mb-0">Reset Password</h4>
 								<a class="back-link" href="login.jsp">← Back</a>
 							</div>
+							
+							<%@ include file="Components/message.jsp" %>
 
 							<form method="post"
 								action="${pageContext.request.contextPath}/sendOtp">

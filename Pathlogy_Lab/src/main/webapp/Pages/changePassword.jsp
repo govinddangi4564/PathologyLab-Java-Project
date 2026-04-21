@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Update Password | Pathology Lab</title>
+<title>Change Password | Pathology Lab</title>
 
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
@@ -93,26 +93,20 @@ h1, h2, h3, h4, h5 {
 	color: #fff;
 }
 
-.back-link {
-	text-decoration: none;
-	font-weight: 600;
-	color: var(--brand-teal);
-}
-
-.signup-text {
+.helper-text {
 	margin-top: 14px;
 	text-align: center;
 	color: var(--brand-muted);
 	font-size: 0.95rem;
 }
 
-.signup-text a {
+.helper-text a {
 	color: var(--brand-teal);
 	font-weight: 700;
 	text-decoration: none;
 }
 
-.signup-text a:hover {
+.helper-text a:hover {
 	text-decoration: underline;
 }
 
@@ -133,21 +127,30 @@ h1, h2, h3, h4, h5 {
 						<div class="form-panel">
 							<div
 								class="d-flex justify-content-between align-items-center mb-3">
-								<h4 class="fw-bold mb-0">New Password</h4>
+								<h4 class="fw-bold mb-0">Change Password</h4>
 							</div>
 
 							<%@ include file="Components/message.jsp"%>
 
-							<form method="post"
-								action="${pageContext.request.contextPath}/updatePassword">
-								<p class="text-muted mb-4" style="font-size: 0.95rem;">Set a
-									new password for your account.</p>
+							<form id="changePasswordForm" method="post"
+								action="<%=request.getContextPath()%>/changePassword">
+								<p class="text-muted mb-4" style="font-size: 0.95rem;">Update
+									your account password securely.</p>
+
+								<div class="mb-3">
+									<label class="form-label" for="currentPassword">Current
+										Password</label> <input type="password" class="form-control"
+										id="currentPassword" name="currentPassword"
+										placeholder="Enter current password" required minlength="6">
+								</div>
+
 								<div class="mb-3">
 									<label class="form-label" for="newPassword">New
 										Password</label> <input type="password" class="form-control"
 										id="newPassword" name="newPassword"
 										placeholder="Enter new password" required minlength="6">
 								</div>
+
 								<div class="mb-3">
 									<label class="form-label" for="confirmPassword">Confirm
 										Password</label> <input type="password" class="form-control"
@@ -155,10 +158,15 @@ h1, h2, h3, h4, h5 {
 										placeholder="Confirm new password" required minlength="6">
 								</div>
 
-								<button class="btn btn-brand w-100 mt-2" type="submit">Update
+								<button class="btn btn-brand w-100 mt-2" type="submit">Change
 									Password</button>
 							</form>
 
+							<div class="helper-text">
+								Back to dashboard? <a
+									href=<%=request.getContextPath()%>/Pages/admin-dashboard.jsp">Go
+									now</a>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -172,16 +180,31 @@ h1, h2, h3, h4, h5 {
 		crossorigin="anonymous"></script>
 
 	<script>
-		const pwForm = document.querySelector('form');
+		const pwForm = document.getElementById('changePasswordForm');
+
 		if (pwForm) {
-			pwForm.addEventListener('submit', function(e) {
-				const pw1 = document.getElementById('newPassword').value;
-				const pw2 = document.getElementById('confirmPassword').value;
-				if (pw1 !== pw2) {
-					e.preventDefault();
-					alert("Passwords do not match!");
-				}
-			});
+			pwForm
+					.addEventListener(
+							'submit',
+							function(e) {
+								const currentPw = document
+										.getElementById('currentPassword').value;
+								const newPw = document
+										.getElementById('newPassword').value;
+								const confirmPw = document
+										.getElementById('confirmPassword').value;
+
+								if (newPw !== confirmPw) {
+									e.preventDefault();
+									alert('New password and confirm password do not match.');
+									return;
+								}
+
+								if (currentPw === newPw) {
+									e.preventDefault();
+									alert('New password must be different from current password.');
+								}
+							});
 		}
 	</script>
 

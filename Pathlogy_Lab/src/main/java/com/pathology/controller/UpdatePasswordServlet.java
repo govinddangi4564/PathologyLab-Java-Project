@@ -30,8 +30,9 @@ public class UpdatePasswordServlet extends HttpServlet {
 
 		HttpSession session = request.getSession(false);
 
-		if (session == null || session.getAttribute("email") == null) {
-			response.sendRedirect("./Pages/login.jsp");
+		if (session == null || session.getAttribute("email") == null
+				|| !(Boolean.TRUE.equals(session.getAttribute("otpVerified")))) {
+			response.sendRedirect(request.getContextPath() + "/Pages/forgetPassword.jsp");
 			return;
 		}
 
@@ -40,24 +41,28 @@ public class UpdatePasswordServlet extends HttpServlet {
 		String nPass = request.getParameter("newPassword");
 		String cPass = request.getParameter("confirmPassword");
 
-		if (!nPass.equals(cPass)) {
-			session.setAttribute("msg", "Passwords do not match");
-			response.sendRedirect("./Pages/updatePassword.jsp");
+		if (nPass == null || cPass == null || !nPass.equals(cPass)) {
+			session.setAttribute("errorMsg", "Passwords do not match");
+			response.sendRedirect(request.getContextPath() + "/Pages/updatePassword.jsp");
 			return;
 		}
+
 		String hashPass = BCrypt.hashpw(nPass, BCrypt.gensalt());
 
 		UserDao dao = new UserDao();
-
 		int i = dao.updatePassword(email, hashPass);
 
-		if (i != 0) {
+		if (i > 0) {
 			session.removeAttribute("email");
+			session.removeAttribute("otpVerified");
+
 			session.setAttribute("successMsg", "Password Updated Successfully");
-			response.sendRedirect(request.getContextPath() + "./Pages/login.jsp");
+
+			response.sendRedirect(request.getContextPath() + "/Pages/login.jsp");
+
 		} else {
 			session.setAttribute("errorMsg", "Failed to update password");
-			response.sendRedirect("./Pages/updatePassword.jsp");
+			response.sendRedirect(request.getContextPath() + "/Pages/updatePassword.jsp");
 		}
 	}
 

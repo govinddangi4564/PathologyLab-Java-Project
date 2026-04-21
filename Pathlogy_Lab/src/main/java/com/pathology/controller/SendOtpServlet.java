@@ -13,6 +13,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.util.Properties;
 
@@ -37,11 +39,23 @@ public class SendOtpServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String email = request.getParameter("email");
+
+		HttpSession session = request.getSession();
+		UserDao dao = new UserDao();
+
+		if (!dao.isEmailExists(email)) {
+			session.setAttribute("errorMsg", "Email not registered");
+			response.sendRedirect(request.getContextPath() + "/Pages/forgetPassword.jsp");
+			return;
+		}
+
 		String otp = generateOtp();
 
-		request.getSession().setAttribute("email", email);
+//		request.setAttribute("email", email);
 
-		UserDao dao = new UserDao();
+		session.setAttribute("email", email);
+		session.setAttribute("otpVerified", false);
+
 		int i = dao.storeOtp(email, otp);
 
 		String from = "govinddangi5811@gmail.com";
@@ -53,36 +67,67 @@ public class SendOtpServlet extends HttpServlet {
 		props.setProperty("mail.smtp.host", "smtp.gmail.com");
 		props.setProperty("mail.smtp.port", "587");
 
-		Session session = Session.getInstance(props, new Authenticator() {
+		Session mailSession = Session.getInstance(props, new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
 				return new PasswordAuthentication(from, appPass);
 			}
 		});
 
 		try {
-			MimeMessage msg = new MimeMessage(session);
+			MimeMessage msg = new MimeMessage(mailSession);
 			msg.setFrom(new InternetAddress(from));
 			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
 			msg.setSubject("OTP for Password Reset - Pathology Lab");
-			msg.setText("Dear User,\n\n"
-					+ "Please use the following One-Time Password (OTP) to proceed with your request.\n\n"
-					+ "Your OTP is: " + otp + "\n\n"
-					+ "Note: This OTP is valid for the next 10 minutes. Please do not share it with anyone.\n\n"
-					+ "Thank you,\nPathology Lab");
+
+			String message = "<html>"
+					+ "<body style='font-family:Arial, sans-serif; background:#f4f6f8; padding:20px;'>"
+
+					+ "<div style='max-width:500px; margin:auto; background:#ffffff; padding:25px; border-radius:10px; box-shadow:0 5px 15px rgba(0,0,0,0.1);'>"
+
+					// Header
+					+ "<h2 style='color:#0b7a75; text-align:center;'>Pathology Lab</h2>"
+					+ "<hr style='border:none; border-top:1px solid #eee;'>"
+
+					// Greeting
+					+ "<p style='font-size:15px;'>Dear User,</p>"
+
+					// Message
+					+ "<p style='font-size:15px;'>We received a request to reset your password. Please use the OTP below to proceed:</p>"
+
+					// OTP Box
+					+ "<div style='text-align:center; margin:25px 0;'>"
+					+ "<span style='font-size:28px; letter-spacing:5px; font-weight:bold; color:#ffffff; background:#0b7a75; padding:12px 25px; border-radius:8px;'>"
+					+ otp + "</span>" + "</div>"
+
+					// Info
+					+ "<p style='font-size:14px; color:#555;'>This OTP is valid for <b>10 minutes</b>. Please do not share it with anyone.</p>"
+
+					// Warning
+					+ "<p style='font-size:13px; color:#888;'>If you did not request this, please ignore this email.</p>"
+
+					// Footer
+					+ "<hr style='border:none; border-top:1px solid #eee;'>"
+					+ "<p style='font-size:13px; color:#888; text-align:center;'>"
+					+ "© 2026 Pathology Lab | All Rights Reserved" + "</p>"
+
+					+ "</div>" + "</body>" + "</html>";
+
+			msg.setContent(message, "text/html");
 
 			Transport.send(msg);
 
-			if (i != 0) {
-				request.getSession().setAttribute("msg", "OTP sent successfully");
+			if (i > 0) {
+				session.setAttribute("successMsg", "OTP sent successfully");
 			} else {
-				request.getSession().setAttribute("msg", "Something Went Wrong.");
+				session.setAttribute("errorMsg", "Something went wrong");
 			}
-
-			response.sendRedirect("./Pages/verifyOtp.jsp");
 
 		} catch (MessagingException e) {
 			e.printStackTrace();
+			session.setAttribute("errorMsg", "Email sending failed");
 		}
+
+		response.sendRedirect(request.getContextPath() + "/Pages/verifyOtp.jsp");
 	}
 
 }

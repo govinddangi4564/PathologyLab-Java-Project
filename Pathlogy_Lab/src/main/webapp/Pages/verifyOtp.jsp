@@ -124,20 +124,6 @@ h1, h2, h3, h4, h5 {
 </head>
 
 <body>
-	<%
-	String msg = (String) session.getAttribute("msg");
-	if (msg != null) {
-	%>
-	<div id="alertMsg"
-		class="alert alert-success alert-dismissible fade show" role="alert">
-		<%=msg%>
-		<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-	</div>
-	<%
-	session.removeAttribute("msg");
-	}
-	%>
-
 	<div class="auth-wrap">
 
 		<div class="container">
@@ -151,6 +137,8 @@ h1, h2, h3, h4, h5 {
 								<h4 class="fw-bold mb-0">Enter OTP</h4>
 								<a class="back-link" href="forgetPassword.jsp">← Back</a>
 							</div>
+
+							<%@ include file="Components/message.jsp"%>
 
 							<form method="post"
 								action="${pageContext.request.contextPath}/verifyOtp">
@@ -175,17 +163,6 @@ h1, h2, h3, h4, h5 {
 			</div>
 		</div>
 	</div>
-
-	<script>
-setTimeout(function() {
-    let alert = document.getElementById("alertMsg");
-    if (alert) {
-        alert.classList.remove("show");
-        alert.classList.add("fade");
-        setTimeout(() => alert.remove(), 500);
-    }
-}, 3000); // 3 seconds
-</script>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"

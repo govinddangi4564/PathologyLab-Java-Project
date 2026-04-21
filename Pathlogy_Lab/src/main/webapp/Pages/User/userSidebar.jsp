@@ -1,7 +1,6 @@
 <%@page import="com.pathology.model.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page session="false"%>
 <!DOCTYPE html>
 <html>
 
@@ -15,24 +14,26 @@
 	rel="stylesheet">
 
 <link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/Css/sidebar.css">
+	href="<%=request.getContextPath()%>/Css/sidebar.css">
 
 </head>
 
 <body>
 
 	<%
-	HttpSession session = request.getSession(false);
+	HttpSession emailSession = request.getSession(false);
 
-	if (session == null || session.getAttribute("userObj") == null) {
+	if (emailSession == null || emailSession.getAttribute("userObj") == null) {
 		response.sendRedirect(request.getContextPath() + "/login");
 		return;
 	}
+
 	User u = (User) session.getAttribute("userObj");
 
-	response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-	%>
+	String email = u.getEmail();
 
+	request.setAttribute("email", email);
+	%>
 
 	<div class="sidebar" id="userSidebar">
 		<div class="sidebar-header">
@@ -42,21 +43,20 @@
 		</div>
 
 		<span class="nav-label">Main Menu</span> <a
-			href="${pageContext.request.contextPath}/Pages/User/user-dashboard.jsp"
+			href="<%=request.getContextPath()%>/Pages/User/user-dashboard.jsp"
 			class="active"> <i class="fa-solid fa-user"></i> Dashboard
-		</a> <a href="${pageContext.request.contextPath}/userViewReports"> <i
+		</a> <a href="<%=request.getContextPath()%>/userViewReports"> <i
 			class="fa-solid fa-file-medical"></i> My Reports
 		</a> <a href="#"> <i class="fa-solid fa-calendar-check"></i>
 			Appointments
 		</a> <span class="nav-label">Settings</span> <a
-			href="${pageContext.request.contextPath}/Pages/forgetPassword.jsp"> <i
+			href="<%=request.getContextPath()%>/sendOtp"> <i
 			class="fa-solid fa-lock"></i> Change Password
 		</a>
 
 		<div class="bottom-nav">
-			<a href="${pageContext.request.contextPath}/logout"
-				class="logout-link"> <i class="fa-solid fa-right-from-bracket"></i>
-				Logout
+			<a href="<%=request.getContextPath()%>/logout" class="logout-link">
+				<i class="fa-solid fa-right-from-bracket"></i> Logout
 			</a>
 		</div>
 	</div>
@@ -75,9 +75,7 @@
 
 			<div class="profile-section">
 				<div class="profile-info">
-					<div class="profile-name">
-						<%=u.getName()%>
-					</div>
+					<div class="profile-name">Name</div>
 					<div class="profile-role">User</div>
 				</div>
 				<div class="profile-img">

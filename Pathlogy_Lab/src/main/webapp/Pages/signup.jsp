@@ -108,25 +108,6 @@ h1, h2, h3, h4, h5 {
 
 <body>
 
-	<%
-	String success = (String) session.getAttribute("successMsg");
-	String error = (String) session.getAttribute("errorMsg");
-
-	if (success != null) {
-	%>
-	<div class="alert alert-success"><%=success%></div>
-	<%
-	session.removeAttribute("successMsg");
-	}
-
-	if (error != null) {
-	%>
-	<div class="alert alert-danger"><%=error%></div>
-	<%
-	session.removeAttribute("errorMsg");
-	}
-	%>
-
 	<div class="auth-wrap">
 		<div class="container">
 			<div class="row justify-content-center">
@@ -139,6 +120,8 @@ h1, h2, h3, h4, h5 {
 								<a class="back-link"
 									href="<%=request.getContextPath()%>/index.jsp">← Back</a>
 							</div>
+
+							<%@ include file="Components/message.jsp"%>
 
 							<form method="post" action="<%=request.getContextPath()%>/signup">
 								<div class="mb-3">
@@ -177,15 +160,6 @@ h1, h2, h3, h4, h5 {
 			</div>
 		</div>
 	</div>
-
-	<script>
-		setTimeout(function() {
-			let alert = document.getElementById("alertMsg");
-			if (alert) {
-				alert.style.display = "none";
-			}
-		}, 3000);
-	</script>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"

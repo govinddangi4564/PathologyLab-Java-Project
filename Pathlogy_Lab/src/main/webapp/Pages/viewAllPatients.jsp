@@ -223,7 +223,8 @@ body {
 
 <body>
 
-	<%@ include file="auth.jsp"%>
+	<%@ include file="Components/auth.jsp"%>
+	
 	<%
 	List<Patient> list = (List<Patient>) request.getAttribute("reportList");
 	%>

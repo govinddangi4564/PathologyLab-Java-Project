@@ -30,41 +30,50 @@ public class VerifyOtpServlet extends HttpServlet {
 
 		HttpSession session = request.getSession(false);
 
-		String email = (String) request.getSession().getAttribute("email");
+		if (session == null) {
+			response.sendRedirect(request.getContextPath() + "/Pages/forgetPassword.jsp");
+			return;
+		}
 
-		String userOtp = request.getParameter("otp"); // User entered otp
+		String email = (String) session.getAttribute("email");
+		String userOtp = request.getParameter("otp");
 
+		if (email == null || userOtp == null) {
+			session.setAttribute("errorMsg", "Session expired. Try again.");
+			response.sendRedirect(request.getContextPath() + "/Pages/forgetPassword.jsp");
+			return;
+		}
 		UserDao dao = new UserDao();
 		User dbUser = dao.verifyOtp(email); // db otp + time
 
-		if (dbUser != null) {
+		if (dbUser != null && dbUser.getOtp() != null && dbUser.getOtpTime() != null) {
 			String dbOtp = dbUser.getOtp();
 			Timestamp otpTime = dbUser.getOtpTime();
 
-			Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-
-			long diff = currentTime.getTime() - otpTime.getTime();
+			long diff = System.currentTimeMillis() - otpTime.getTime();
 			long minutes = diff / (1000 * 60);
 
 			if (minutes > 10) {
-				session.setAttribute("msg", "OTP expired");
+				session.setAttribute("errorMsg", "OTP expired");
 				response.sendRedirect("./Pages/verifyOtp.jsp");
+
 			} else if (dbOtp.equals(userOtp)) {
 
 				// clear OTP after verify
 				dao.clearOtp(email);
 
-				session.setAttribute("msg", "OTP Verified");
-				response.sendRedirect("./Pages/updatePassword.jsp");
+				session.setAttribute("otpVerified", true);
+
+				session.setAttribute("successMsg", "OTP Verified");
+				response.sendRedirect(request.getContextPath() + "/Pages/updatePassword.jsp");
 			} else {
-				session.setAttribute("msg", "Invalid OTP");
-				response.sendRedirect("./Pages/verifyOtp.jsp");
+				session.setAttribute("errorMsg", "Invalid OTP");
+				response.sendRedirect(request.getContextPath() + "/Pages/verifyOtp.jsp");
 			}
+
 		} else {
-			session.setAttribute("msg", "Something Went Wrong");
-			response.sendRedirect("./Pages/verifyOtp.jsp");
+			session.setAttribute("errorMsg", "Invalid request or OTP not found");
+			response.sendRedirect(request.getContextPath() + "/Pages/verifyOtp.jsp");
 		}
-
 	}
-
 }

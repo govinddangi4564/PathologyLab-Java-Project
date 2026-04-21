@@ -113,7 +113,7 @@ body {
 
 <body data-admin-page="reports">
 
-	<%@ include file="auth.jsp"%>
+	<%@ include file="Components/auth.jsp"%>
 
 	<%@ include file="adminSidebar.jsp"%>
 

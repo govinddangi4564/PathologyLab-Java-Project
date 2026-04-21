@@ -27,6 +27,7 @@
 <body>
 
 	<%@ include file="userSidebar.jsp"%>
+	<%@ include file="../Components/auth.jsp"%>
 
 	<!-- Main Content -->
 	<div class="main-content">

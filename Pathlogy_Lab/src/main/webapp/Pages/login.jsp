@@ -147,28 +147,6 @@ h1, h2, h3, h4, h5 {
 </head>
 
 <body>
-	<%
-	String successMsg = (String) session.getAttribute("successMsg");
-	String errorMsg = (String) session.getAttribute("errorMsg");
-
-	if (successMsg != null) {
-	%>
-	<div id="alertMsg" class="alert alert-success text-center">
-		<%=successMsg%>
-	</div>
-	<%
-	session.removeAttribute("successMsg");
-	}
-
-	if (errorMsg != null) {
-	%>
-	<div id="alertMsg" class="alert alert-danger text-center">
-		<%=errorMsg%>
-	</div>
-	<%
-	session.removeAttribute("errorMsg");
-	}
-	%>
 
 	<div class="auth-wrap">
 		<div class="container">
@@ -182,8 +160,10 @@ h1, h2, h3, h4, h5 {
 								<a class="back-link" href="../index.jsp">← Back</a>
 							</div>
 
+							<%@ include file="Components/message.jsp"%>
+							
 							<form method="post"
-								action="${pageContext.request.contextPath}/login">
+								action="<%=request.getContextPath()%>/login">
 								<div class="mb-3">
 									<label class="form-label" for="loginId">Email or Mobile</label>
 									<input type="text" class="form-control" id="loginId"
@@ -195,14 +175,14 @@ h1, h2, h3, h4, h5 {
 										type="password" class="form-control" id="password"
 										name="password" placeholder="Enter password" required>
 									<div class="text-end mt-2">
-										<a href="forgetPassword.jsp" class="back-link"
+										<a href="<%=request.getContextPath()%>/Pages/forgetPassword.jsp" class="back-link"
 											style="font-size: 0.9rem;">Forgot Password?</a>
 									</div>
 								</div>
 								<button class="btn btn-brand w-100" type="submit">Login</button>
 							</form>
 							<p class="signup-text mb-0">
-								Don't have an account? <a href="signup.jsp">Sign Up</a>
+								Don't have an account? <a href="<%=request.getContextPath()%>/Pages/signup.jsp">Sign Up</a>
 							</p>
 						</div>
 					</div>
@@ -210,15 +190,6 @@ h1, h2, h3, h4, h5 {
 			</div>
 		</div>
 	</div>
-
-	<script>
-		setTimeout(function() {
-			let alert = document.getElementById("alertMsg");
-			if (alert) {
-				alert.style.display = "none";
-			}
-		}, 3000);
-	</script>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
