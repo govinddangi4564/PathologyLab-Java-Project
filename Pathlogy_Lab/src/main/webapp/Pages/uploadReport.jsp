@@ -225,6 +225,7 @@ to {
 
 <body data-admin-page="upload">
 
+	<%@ include file="auth.jsp"%>
 	<%@ include file="adminSidebar.jsp"%>
 
 	<div class="main-content">

@@ -119,26 +119,9 @@
 
 <body data-admin-page="dashboard">
 
+	<%@ include file="auth.jsp"%>
+
 	<%@ include file="adminSidebar.jsp"%>
-
-	<%
-	String success = (String) session.getAttribute("successMsg");
-	String error = (String) session.getAttribute("errorMsg");
-
-	if (success != null) {
-	%>
-	<div class="alert alert-success"><%=success%></div>
-	<%
-	session.removeAttribute("successMsg");
-	}
-
-	if (error != null) {
-	%>
-	<div class="alert alert-danger"><%=error%></div>
-	<%
-	session.removeAttribute("errorMsg");
-	}
-	%>
 
 	<%
 	PatientDao pdao = new PatientDao();
@@ -151,6 +134,24 @@
 
 
 	<div class="main-content">
+		<%
+		String success = (String) session.getAttribute("successMsg");
+		String error = (String) session.getAttribute("errorMsg");
+
+		if (success != null) {
+		%>
+		<div class="alert alert-success"><%=success%></div>
+		<%
+		session.removeAttribute("successMsg");
+		}
+
+		if (error != null) {
+		%>
+		<div class="alert alert-danger"><%=error%></div>
+		<%
+		session.removeAttribute("errorMsg");
+		}
+		%>
 		<h2 class="page-title">Admin Dashboard</h2>
 		<p class="page-subtitle">Quick summary of report operations and
 			patient records.</p>

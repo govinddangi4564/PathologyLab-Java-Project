@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page session="false"%>
 <!DOCTYPE html>
 <html>
 
@@ -148,18 +147,26 @@ h1, h2, h3, h4, h5 {
 </head>
 
 <body>
-
 	<%
-	String msg = (String) request.getAttribute("msg");
-	%>
+	String successMsg = (String) session.getAttribute("successMsg");
+	String errorMsg = (String) session.getAttribute("errorMsg");
 
-	<%
-	if (msg != null) {
+	if (successMsg != null) {
 	%>
-	<div class="alert alert-danger text-center" role="alert">
-		<%=msg%>
+	<div id="alertMsg" class="alert alert-success text-center">
+		<%=successMsg%>
 	</div>
 	<%
+	session.removeAttribute("successMsg");
+	}
+
+	if (errorMsg != null) {
+	%>
+	<div id="alertMsg" class="alert alert-danger text-center">
+		<%=errorMsg%>
+	</div>
+	<%
+	session.removeAttribute("errorMsg");
 	}
 	%>
 
@@ -192,18 +199,6 @@ h1, h2, h3, h4, h5 {
 											style="font-size: 0.9rem;">Forgot Password?</a>
 									</div>
 								</div>
-								<div class="mb-3">
-									<label class="form-label d-block">Role</label>
-									<div class="role-options">
-										<label class="role-option" for="roleUser"> <input
-											type="radio" id="roleUser" name="role" value="USER" checked>
-											<span>User</span>
-										</label> <label class="role-option" for="roleAdmin"> <input
-											type="radio" id="roleAdmin" name="role" value="ADMIN">
-											<span>Admin</span>
-										</label>
-									</div>
-								</div>
 								<button class="btn btn-brand w-100" type="submit">Login</button>
 							</form>
 							<p class="signup-text mb-0">
@@ -217,15 +212,13 @@ h1, h2, h3, h4, h5 {
 	</div>
 
 	<script>
-setTimeout(function() {
-    let alert = document.getElementById("alertMsg");
-    if (alert) {
-        alert.classList.remove("show");
-        alert.classList.add("fade");
-        setTimeout(() => alert.remove(), 500);
-    }
-}, 3000); // 3 seconds
-</script>
+		setTimeout(function() {
+			let alert = document.getElementById("alertMsg");
+			if (alert) {
+				alert.style.display = "none";
+			}
+		}, 3000);
+	</script>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"

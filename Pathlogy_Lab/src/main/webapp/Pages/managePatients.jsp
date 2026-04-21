@@ -27,7 +27,7 @@
 </head>
 
 <body>
-
+	<%@ include file="auth.jsp"%>
 	<%@ include file="adminSidebar.jsp"%>
 
 	<div class="main-content">

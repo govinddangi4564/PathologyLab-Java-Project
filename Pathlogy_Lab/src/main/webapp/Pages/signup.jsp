@@ -136,11 +136,11 @@ h1, h2, h3, h4, h5 {
 							<div
 								class="d-flex justify-content-between align-items-center mb-3">
 								<h4 class="fw-bold mb-0">Create Account</h4>
-								<a class="back-link" href="../index.jsp">← Back</a>
+								<a class="back-link"
+									href="<%=request.getContextPath()%>/index.jsp">← Back</a>
 							</div>
 
-							<form method="post"
-								action="${pageContext.request.contextPath}/signup">
+							<form method="post" action="<%=request.getContextPath()%>/signup">
 								<div class="mb-3">
 									<label class="form-label" for="fullName">Full Name</label> <input
 										type="text" class="form-control" id="fullName" name="fullName"
@@ -161,17 +161,15 @@ h1, h2, h3, h4, h5 {
 										type="password" class="form-control" id="password"
 										name="password" placeholder="Create password" required>
 								</div>
-								<div class="mb-4">
-									<label class="form-label">Role</label> <input type="text"
-										class="form-control" value="User" readonly> <input
-										type="hidden" name="role" value="USER">
-								</div>
+								<input type="hidden" name="role" value="USER">
+
 								<button class="btn btn-brand w-100" type="submit">Sign
 									Up</button>
 							</form>
 
 							<p class="meta-text mt-3 mb-0">
-								Already have an account? <a href="login.jsp">Login</a>
+								Already have an account? <a
+									href="<%=request.getContextPath()%>/Pages/login.jsp">Login</a>
 							</p>
 						</div>
 					</div>
@@ -179,6 +177,15 @@ h1, h2, h3, h4, h5 {
 			</div>
 		</div>
 	</div>
+
+	<script>
+		setTimeout(function() {
+			let alert = document.getElementById("alertMsg");
+			if (alert) {
+				alert.style.display = "none";
+			}
+		}, 3000);
+	</script>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"

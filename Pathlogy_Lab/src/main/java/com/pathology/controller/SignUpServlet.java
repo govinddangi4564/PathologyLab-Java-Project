@@ -33,32 +33,33 @@ public class SignUpServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String mob = request.getParameter("mobile");
 		String pass = request.getParameter("password");
-		String role = request.getParameter("role");
-
-		String hashPass = BCrypt.hashpw(pass, BCrypt.gensalt());
-
-		User us = new User(name, email, mob, hashPass, role);
-
-		UserDao dao = new UserDao();
-
-		int i = dao.signup(us);
 
 		HttpSession session = request.getSession();
+		UserDao dao = new UserDao();
 
+		// Step 1: Check email BEFORE insert
 		if (dao.isEmailExists(email)) {
 			session.setAttribute("errorMsg", "Email already registered");
-			response.sendRedirect("signup.jsp");
+			response.sendRedirect(request.getContextPath() + "/Pages/signup.jsp");
 			return;
 		}
 
-		if (i != 0) {
+		// Hash password
+		String hashPass = BCrypt.hashpw(pass, BCrypt.gensalt());
+
+		// Role fixed (no user input)
+		User us = new User(name, email, mob, hashPass, "USER");
+
+		// Step 2: Insert
+		int i = dao.signup(us);
+
+		if (i > 0) {
 			session.setAttribute("successMsg", "Registration Successful. Please login.");
 			response.sendRedirect(request.getContextPath() + "/Pages/login.jsp");
 		} else {
 			session.setAttribute("errorMsg", "Something went wrong. Try again.");
 			response.sendRedirect(request.getContextPath() + "/Pages/signup.jsp");
 		}
-
 	}
 
 }

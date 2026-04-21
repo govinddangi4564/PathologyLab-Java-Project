@@ -14,16 +14,14 @@ public class UserDao {
 	public boolean isEmailExists(String email) {
 		boolean exists = false;
 
-		try {
-			Connection con = DBConnection.getConnection();
-			String sql = "SELECT * FROM users WHERE email = ?";
-			PreparedStatement ps = con.prepareStatement(sql);
+		String sql = "SELECT 1 FROM users WHERE email = ?";
+
+		try (Connection con = DBConnection.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+
 			ps.setString(1, email);
 
-			var rs = ps.executeQuery();
-
-			if (rs.next()) {
-				exists = true;
+			try (ResultSet rs = ps.executeQuery()) {
+				exists = rs.next();
 			}
 
 		} catch (Exception e) {
@@ -85,16 +83,15 @@ public class UserDao {
 		return i;
 	}
 
-	public User login(String emailOrMobile, String role) {
+	public User login(String emailOrMobile) {
 		User u = null;
 
 		try (Connection con = DBConnection.getConnection();
-				PreparedStatement pst = con
-						.prepareStatement("SELECT * FROM users WHERE (email = ? or mobile = ?) and role = ?")) {
+				PreparedStatement pst = con.prepareStatement(
+						"SELECT id,name,email,mobile,password,role FROM users WHERE (email = ? or mobile = ?)")) {
 
 			pst.setString(1, emailOrMobile);
 			pst.setString(2, emailOrMobile);
-			pst.setString(3, role);
 
 			ResultSet rs = pst.executeQuery();
 

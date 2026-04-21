@@ -1,7 +1,6 @@
 <%@page import="com.pathology.model.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page session="false"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,20 +20,6 @@
 </head>
 
 <body>
-
-	<%
-	HttpSession session = request.getSession(false);
-
-	if (session == null || session.getAttribute("userObj") == null) {
-		response.sendRedirect(request.getContextPath() + "/login");
-		return;
-	}
-
-	User u = (User) session.getAttribute("userObj");
-
-	// Prevent back button after logout
-	response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
-	%>
 
 	<div class="sidebar" id="adminSidebar">
 		<div class="sidebar-header">
@@ -81,8 +66,7 @@
 
 			<div class="profile-section">
 				<div class="profile-info">
-					<div class="profile-name">
-						<%=u.getName() %>
+					<div class="profile-name">Name
 					</div>
 					<div class="profile-role">Super Admin</div>
 				</div>

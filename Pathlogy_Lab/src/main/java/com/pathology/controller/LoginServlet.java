@@ -29,31 +29,38 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
 
 		String emailOrMobile = request.getParameter("loginId");
 		String pass = request.getParameter("password");
-		String role = request.getParameter("role");
 
 		UserDao dao = new UserDao();
-		User user = dao.login(emailOrMobile, role);
+		User user = dao.login(emailOrMobile);
 
-		if (user != null && BCrypt.checkpw(pass, user.getPassword())) {
+		if (user != null && user.getPassword() != null && BCrypt.checkpw(pass, user.getPassword())) {
 
+			HttpSession oldSession = request.getSession(false);
+			if (oldSession != null) {
+				oldSession.invalidate();
+			}
+
+			HttpSession session = request.getSession(true);
 			session.setAttribute("userObj", user);
 
-			if ("USER".equals(role)) {
-				session.setAttribute("successMsg", "Login Successful");
-				response.sendRedirect("Pages/User/user-dashboard.jsp");
-			} else {
-				session.setAttribute("successMsg", "Login Successful");
-				response.sendRedirect("Pages/admin-dashboard.jsp");
+			String role = user.getRole();
+
+			session.setAttribute("successMsg", "Login Successful");
+
+			if ("USER".equalsIgnoreCase(role)) {
+				response.sendRedirect(request.getContextPath() + "/Pages/User/user-dashboard.jsp");
+			} else if ("ADMIN".equalsIgnoreCase(role)) {
+				response.sendRedirect(request.getContextPath() + "/Pages/admin-dashboard.jsp");
 			}
 
 		} else {
+			HttpSession session = request.getSession();
 			session.setAttribute("errorMsg", "Invalid Credentials");
-			response.sendRedirect("./Pages/login.jsp");
+
+			response.sendRedirect(request.getContextPath() + "/Pages/login.jsp");
 		}
 	}
-
 }
