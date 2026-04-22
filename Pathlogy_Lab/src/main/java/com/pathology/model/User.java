@@ -20,6 +20,9 @@ public class User {
 	private String otp;
 	private Timestamp otpTime;
 
+	private int rating;
+	private String message;
+
 	public User(String name, String email, String mobile, String password, String role) {
 		super();
 		this.name = name;
@@ -43,6 +46,11 @@ public class User {
 		this.mobile = mobile;
 		this.password = password;
 		this.role = role;
+	}
+
+	public User(String password) {
+		super();
+		this.password = password;
 	}
 
 }

@@ -6,7 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.LinkedList;
+import java.util.List;
 
+import com.pathology.model.Patient;
 import com.pathology.model.User;
 
 public class UserDao {
@@ -240,6 +243,48 @@ public class UserDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return i;
+	}
+
+	public User getPassword(String email) {
+		User u = null;
+
+		try (Connection con = DBConnection.getConnection();
+				PreparedStatement pst = con.prepareStatement("SELECT password FROM USERS WHERE email = ?")) {
+			pst.setString(1, email);
+
+			ResultSet rs = pst.executeQuery();
+
+			if (rs.next()) {
+				u = new User(rs.getString("password"));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return u;
+	}
+
+	public int addStaff(User u) {
+		int i = 0;
+
+		try (Connection con = DBConnection.getConnection();
+				PreparedStatement pst = con.prepareStatement(
+						"INSERT INTO users (name, email, mobile, password, role) VALUES (?,?,?,?,?)")) {
+
+			pst.setString(1, u.getName());
+			pst.setString(2, u.getEmail());
+			pst.setString(3, u.getMobile());
+			pst.setString(4, u.getPassword());
+			pst.setString(5, u.getRole());
+
+			i = pst.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		return i;
 	}
 

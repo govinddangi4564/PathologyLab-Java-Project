@@ -31,6 +31,7 @@
 
 	<!-- Main Content -->
 	<div class="main-content">
+		<%@ include file="../Components/message.jsp"%>
 		<div class="dashboard-header">
 			<h2>
 				Welcome Back,

@@ -134,9 +134,9 @@
 
 
 	<div class="main-content">
-		
-		<%@ include file="Components/message.jsp" %>
-		
+
+		<%@ include file="Components/message.jsp"%>
+
 		<h2 class="page-title">Admin Dashboard</h2>
 		<p class="page-subtitle">Quick summary of report operations and
 			patient records.</p>
@@ -189,10 +189,9 @@
 					<h5>Quick Actions</h5>
 					<div class="quick-actions">
 						<a href="uploadReport.jsp" class="btn btn-primary btn-sm">Upload
-							Report</a> <a
-							href="${pageContext.request.contextPath}/viewAllReports"
+							Report</a> <a href="<%=request.getContextPath()%>/viewAllReports"
 							class="btn btn-outline-primary btn-sm">Review Reports</a> <a
-							href="${pageContext.request.contextPath}/viewPatients"
+							href="<%=request.getContextPath()%>/viewPatients"
 							class="btn btn-outline-secondary btn-sm">Patient List</a>
 					</div>
 				</div>

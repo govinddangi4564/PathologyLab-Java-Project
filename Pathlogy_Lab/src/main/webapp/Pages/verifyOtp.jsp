@@ -141,7 +141,7 @@ h1, h2, h3, h4, h5 {
 							<%@ include file="Components/message.jsp"%>
 
 							<form method="post"
-								action="${pageContext.request.contextPath}/verifyOtp">
+								action="<%=request.getContextPath()%>/verifyOtp">
 								<p class="text-muted mb-4" style="font-size: 0.95rem;">Please
 									enter the 6-digit OTP sent to your email.</p>
 								<div class="mb-3">

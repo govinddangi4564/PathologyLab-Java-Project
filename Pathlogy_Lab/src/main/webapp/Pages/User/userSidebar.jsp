@@ -21,14 +21,27 @@
 <body>
 
 	<%
-	HttpSession emailSession = request.getSession(false);
+	HttpSession newSession = request.getSession(false);
 
-	if (emailSession == null || emailSession.getAttribute("userObj") == null) {
+	if (newSession == null) {
 		response.sendRedirect(request.getContextPath() + "/login");
 		return;
 	}
 
-	User u = (User) session.getAttribute("userObj");
+	User u = (User) newSession.getAttribute("userObj");
+
+	if (u == null) {
+		response.sendRedirect(request.getContextPath() + "/login");
+		return;
+	}
+
+	if (!"USER".equals(u.getRole())) {
+		response.sendRedirect(request.getContextPath() + "/login");
+		return;
+	}
+
+	String name = u.getName();
+	String role = u.getRole();
 
 	String email = u.getEmail();
 
@@ -50,12 +63,14 @@
 		</a> <a href="#"> <i class="fa-solid fa-calendar-check"></i>
 			Appointments
 		</a> <span class="nav-label">Settings</span> <a
-			href="<%=request.getContextPath()%>/sendOtp"> <i
+			href="<%=request.getContextPath()%>/Pages/changePassword.jsp"> <i
 			class="fa-solid fa-lock"></i> Change Password
 		</a>
 
 		<div class="bottom-nav">
-			<a href="<%=request.getContextPath()%>/logout" class="logout-link">
+			<a href="<%=request.getContextPath()%>/logout" class="logout-link"
+				class="btn btn-outline-danger btn-sm"
+				onclick="return confirm('Are you sure you want to Logout ?');">
 				<i class="fa-solid fa-right-from-bracket"></i> Logout
 			</a>
 		</div>
@@ -75,8 +90,8 @@
 
 			<div class="profile-section">
 				<div class="profile-info">
-					<div class="profile-name">Name</div>
-					<div class="profile-role">User</div>
+					<div class="profile-name"><%=name%></div>
+					<div class="profile-role"><%=role%></div>
 				</div>
 				<div class="profile-img">
 					<i class="fa-solid fa-user-shield"></i>

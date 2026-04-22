@@ -1,3 +1,5 @@
+<%@page
+	import="org.apache.jasper.compiler.NewlineReductionServletWriter"%>
 <%@page import="com.pathology.model.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -15,11 +17,35 @@
 	rel="stylesheet">
 
 <link rel="stylesheet" type="text/css"
-	href="${pageContext.request.contextPath}/Css/sidebar.css">
+	href="<%=request.getContextPath()%>/Css/sidebar.css">
 
 </head>
 
 <body>
+
+	<%
+	HttpSession newSession = request.getSession(false);
+
+	if (newSession == null) {
+		response.sendRedirect(request.getContextPath() + "/login");
+		return;
+	}
+
+	User u = (User) newSession.getAttribute("userObj");
+
+	if (u == null) {
+		response.sendRedirect(request.getContextPath() + "/login");
+		return;
+	}
+
+	if (!"ADMIN".equals(u.getRole())) {
+		response.sendRedirect(request.getContextPath() + "/login");
+		return;
+	}
+
+	String name = u.getName();
+	String role = u.getRole();
+	%>
 
 	<div class="sidebar" id="adminSidebar">
 		<div class="sidebar-header">
@@ -29,24 +55,29 @@
 		</div>
 
 		<span class="nav-label">Overview</span> <a
-			href="${pageContext.request.contextPath}/Pages/admin-dashboard.jsp"
+			href="<%=request.getContextPath()%>/Pages/admin-dashboard.jsp"
 			data-admin-link="dashboard"> <i class="fa-solid fa-gauge-high"></i>
 			Dashboard
-		</a> <a href="${pageContext.request.contextPath}/Pages/uploadReport.jsp"
+		</a> <a href="<%=request.getContextPath()%>/Pages/uploadReport.jsp"
 			data-admin-link="upload"> <i class="fa-solid fa-cloud-arrow-up"></i>
 			Upload Report
-		</a> <a href="${pageContext.request.contextPath}/viewAllReports"
+		</a> <a href="<%=request.getContextPath()%>/viewAllReports"
 			data-admin-link="view-reports"> <i class="fa-solid fa-file-lines"></i>
 			View Reports
 		</a> <span class="nav-label">Management</span> <a
-			href="${pageContext.request.contextPath}/Pages/managePatients.jsp"
+			href="<%=request.getContextPath()%>/Pages/managePatients.jsp"
 			data-admin-link="patients"> <i class="fa-solid fa-users"></i>
 			Patients
+		</a> <a href="<%=request.getContextPath()%>/Pages/addStaff.jsp"
+			data-admin-link="staff"> <i class="fa-solid fa-users"></i> Add
+			Staff
 		</a>
 
 		<div class="bottom-nav">
 			<a href="#"><i class="fa-solid fa-gear"></i> Settings</a> <a
-				href="${pageContext.request.contextPath}/logout" class="logout-link">
+				href="<%=request.getContextPath()%>/logout" class="logout-link"
+				class="btn btn-outline-danger btn-sm"
+				onclick="return confirm('Are you sure you want to Logout ?');">
 				<i class="fa-solid fa-right-from-bracket"></i> Logout
 			</a>
 		</div>
@@ -66,9 +97,8 @@
 
 			<div class="profile-section">
 				<div class="profile-info">
-					<div class="profile-name">Name
-					</div>
-					<div class="profile-role">Super Admin</div>
+					<div class="profile-name"><%=name%></div>
+					<div class="profile-role"><%=role%></div>
 				</div>
 				<div class="profile-img">
 					<i class="fa-solid fa-user-shield"></i>

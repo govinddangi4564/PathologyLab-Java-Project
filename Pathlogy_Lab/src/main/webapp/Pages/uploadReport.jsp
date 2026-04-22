@@ -230,14 +230,7 @@ to {
 
 	<div class="main-content">
 
-		<%
-		String msg = (String) request.getAttribute("msg");
-		if (msg != null) {
-		%>
-		<div class="alert alert-info"><%=msg%></div>
-		<%
-		}
-		%>
+		<%@ include file="Components/message.jsp" %>
 
 		<div class="upload-container">
 			<div class="glass-card">
@@ -251,7 +244,7 @@ to {
 						portal access.</p>
 				</div>
 
-				<form action="${pageContext.request.contextPath}/uploadReport"
+				<form action="<%=request.getContextPath()%>/uploadReport"
 					method="post" enctype="multipart/form-data">
 					<div class="row g-4">
 
@@ -326,15 +319,6 @@ to {
 				fileNameDisplay.textContent = '';
 			}
 		}
-		
-		setTimeout(function() {
-		    let alert = document.getElementById("alertMsg");
-		    if (alert) {
-		        alert.classList.remove("show");
-		        alert.classList.add("fade");
-		        setTimeout(() => alert.remove(), 500);
-		    }
-		}, 3000); // 3 seconds
 	</script>
 
 </body>

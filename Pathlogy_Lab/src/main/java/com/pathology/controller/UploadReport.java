@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 
 import java.io.File;
@@ -31,7 +32,9 @@ public class UploadReport extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		User u = (User) request.getSession().getAttribute("userObj");
+		HttpSession session = request.getSession();
+
+		User u = (User) session.getAttribute("userObj");
 
 		if (u == null) {
 			response.sendRedirect("login.jsp");
@@ -45,9 +48,14 @@ public class UploadReport extends HttpServlet {
 		String reportStatus = request.getParameter("reportStatus");
 
 		Part pt = request.getPart("reportFile");
-		String path = "D:\\All Codes\\Java FullStack Projects\\Pathlogy Lab\\Pathlogy Lab\\src\\main\\webapp\\reports\\";
+		String path = "D:\\All Codes\\Java FullStack Projects\\Pathlogy_Lab\\Pathlogy_Lab\\src\\main\\webapp\\reports\\";
 
-		String report = title + "_" + pt.getSubmittedFileName();
+		File uploadDir = new File(path);
+		if (!uploadDir.exists()) {
+			uploadDir.mkdirs();
+		}
+
+		String report = System.currentTimeMillis() + "_" + pt.getSubmittedFileName();
 		pt.write(path + File.separator + report);
 
 		Report r = new Report(userId, patientId, title, report, reportStatus);
@@ -56,12 +64,12 @@ public class UploadReport extends HttpServlet {
 
 		int i = dao.uploadReport(r);
 
-		if (i != 0) {
-			request.setAttribute("msg", "Report update successfully");
+		if (i > 0) {
+			session.setAttribute("successMsg", "Report update successfully");
 		} else {
-			request.setAttribute("msg", "Something Went Wrong.");
+			session.setAttribute("errorMsg", "Something Went Wrong.");
 		}
-		request.getRequestDispatcher("./Pages/uploadReport.jsp").forward(request, response);
+		response.sendRedirect(request.getContextPath() + "/Pages/uploadReport.jsp");
 	}
 
 }

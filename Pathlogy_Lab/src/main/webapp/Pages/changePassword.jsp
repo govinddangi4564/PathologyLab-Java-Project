@@ -164,7 +164,7 @@ h1, h2, h3, h4, h5 {
 
 							<div class="helper-text">
 								Back to dashboard? <a
-									href=<%=request.getContextPath()%>/Pages/admin-dashboard.jsp">Go
+									href="<%=request.getContextPath()%>/Pages/User/user-dashboard.jsp">Go
 									now</a>
 							</div>
 						</div>

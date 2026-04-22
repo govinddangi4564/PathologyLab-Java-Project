@@ -140,7 +140,7 @@ h1, h2, h3, h4, h5 {
 							<%@ include file="Components/message.jsp" %>
 
 							<form method="post"
-								action="${pageContext.request.contextPath}/sendOtp">
+								action="<%=request.getContextPath()%>/sendOtp">
 								<p class="text-muted mb-4" style="font-size: 0.95rem;">Enter
 									your registered email. We will send you an OTP to verify your
 									identity.</p>

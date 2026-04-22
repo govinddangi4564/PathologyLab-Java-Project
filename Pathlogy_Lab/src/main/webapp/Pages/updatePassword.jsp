@@ -139,7 +139,7 @@ h1, h2, h3, h4, h5 {
 							<%@ include file="Components/message.jsp"%>
 
 							<form method="post"
-								action="${pageContext.request.contextPath}/updatePassword">
+								action="<%=request.getContextPath()%>/updatePassword">
 								<p class="text-muted mb-4" style="font-size: 0.95rem;">Set a
 									new password for your account.</p>
 								<div class="mb-3">

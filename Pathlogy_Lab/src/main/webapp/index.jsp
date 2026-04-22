@@ -1,3 +1,6 @@
+<%@page import="com.pathology.dao.FeedbackDao"%>
+<%@page import="com.pathology.model.Feedback"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,6 +16,13 @@
 	rel="stylesheet"
 	integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
 	crossorigin="anonymous">
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+	rel="stylesheet">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,6 +64,9 @@
 	</nav>
 
 	<header class="section-gap">
+
+		<%@ include file="Pages/Components/message.jsp"%>
+
 		<div class="container">
 			<div class="row align-items-center g-4">
 				<div class="col-lg-7 reveal">
@@ -291,36 +304,59 @@
 		</div>
 	</section>
 
+	<%
+	FeedbackDao dao = new FeedbackDao();
+	List<Feedback> list = dao.viewFeedback();
+	%>
+
 	<section class="section-gap pt-0">
 		<div class="container">
+
 			<div class="text-center mb-4 reveal">
 				<h2 class="fw-bold">What Patients Say</h2>
+				<p class="text-secondary">Real feedback from our patients</p>
 			</div>
+
 			<div class="row g-4">
+
+				<%
+				if (list != null) {
+					for (Feedback f : list) {
+				%>
+
 				<div class="col-md-4 reveal">
-					<div class="testimonial-card">
-						<p class="mb-3">"Very easy to access reports. I checked
-							everything from my phone without visiting the lab."</p>
-						<h6 class="mb-0 fw-bold">Rahul Sharma</h6>
+					<div class="testimonial-card p-3 shadow-sm rounded">
+
+						<div class="mb-2 text-warning">
+							<%
+							int rating = f.getRating();
+							for (int i = 1; i <= 5; i++) {
+								if (i <= rating) {
+							%>
+							<i class="fa-solid fa-star"></i>
+							<%
+							} else {
+							%>
+							<i class="fa-regular fa-star"></i>
+							<%
+							}
+							}
+							%>
+						</div>
+
+						<p class="mb-3"><%=f.getMessage()%></p>
+
+						<h6 class="mb-0 fw-bold"><%=f.getName()%></h6>
 						<small class="text-secondary">Patient</small>
+
 					</div>
 				</div>
-				<div class="col-md-4 reveal delay-1">
-					<div class="testimonial-card">
-						<p class="mb-3">"The portal is fast and secure. We have
-							reduced report desk workload significantly."</p>
-						<h6 class="mb-0 fw-bold">Priya Nair</h6>
-						<small class="text-secondary">Lab Coordinator</small>
-					</div>
-				</div>
-				<div class="col-md-4 reveal delay-2">
-					<div class="testimonial-card">
-						<p class="mb-3">"No more repeated phone calls. Patients get
-							reports online on time."</p>
-						<h6 class="mb-0 fw-bold">Amit Verma</h6>
-						<small class="text-secondary">Operations Head</small>
-					</div>
-				</div>
+
+				<%
+				}
+				}
+				%>
+
 			</div>
 		</div>
 	</section>
@@ -387,33 +423,58 @@
 		<div class="container">
 			<div class="contact-box reveal">
 				<div class="row g-4 align-items-center">
+
+					<!-- Left Content -->
 					<div class="col-lg-5">
-						<h3 class="fw-bold">Need a Demo for Your Lab?</h3>
-						<p class="text-secondary mb-0">Share your details and our team
-							will help you set up a smooth digital report workflow.</p>
+						<h3 class="fw-bold">Patient Feedback</h3>
+						<p class="text-secondary mb-0">We value your experience.
+							Please share your feedback to help us improve our services.</p>
 					</div>
+
+					<!-- Feedback Form -->
 					<div class="col-lg-7">
-						<form>
+						<form action="<%=request.getContextPath()%>/submitFeedback"
+							method="post">
 							<div class="row g-3">
-								<div class="col-md-4">
-									<input type="text" class="form-control" placeholder="Your Name">
+
+								<div class="col-md-6">
+									<input type="text" name="name" class="form-control"
+										placeholder="Patient Name" required>
 								</div>
-								<div class="col-md-4">
-									<input type="email" class="form-control"
+
+								<div class="col-md-6">
+									<input type="email" name="email" class="form-control"
 										placeholder="Email Address">
 								</div>
-								<div class="col-md-4">
-									<input type="text" class="form-control"
+
+								<div class="col-md-6">
+									<input type="text" name="phone" class="form-control"
 										placeholder="Phone Number">
 								</div>
-								<div class="col-12">
-									<textarea class="form-control" rows="3" placeholder="Message"></textarea>
+
+								<div class="col-md-6">
+									<select name="rating" class="form-control" required>
+										<option value="">Rate Our Service</option>
+										<option value="5">Excellent ⭐⭐⭐⭐⭐</option>
+										<option value="4">Good ⭐⭐⭐⭐</option>
+										<option value="3">Average ⭐⭐⭐</option>
+										<option value="2">Poor ⭐⭐</option>
+										<option value="1">Very Poor ⭐</option>
+									</select>
 								</div>
+
+								<div class="col-12">
+									<textarea name="message" class="form-control" rows="3"
+										placeholder="Your Feedback" required></textarea>
+								</div>
+
 							</div>
-							<button class="btn btn-brand mt-3" type="submit">Send
-								Request</button>
+
+							<button class="btn btn-brand mt-3" type="submit">Submit
+								Feedback</button>
 						</form>
 					</div>
+
 				</div>
 			</div>
 		</div>

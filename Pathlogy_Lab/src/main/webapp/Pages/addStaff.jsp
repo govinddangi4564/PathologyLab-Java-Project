@@ -5,17 +5,15 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Add patient</title>
-<!-- Google Fonts -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Staff</title>
+
 <link
 	href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
 	rel="stylesheet">
-
-<!-- Bootstrap CSS -->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
 	rel="stylesheet">
-<!-- Font Awesome -->
 <link
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 	rel="stylesheet">
@@ -55,8 +53,8 @@ to {
 }
 
 }
-.upload-container {
-	max-width: 850px;
+.staff-container {
+	max-width: 920px;
 	margin: 0 auto;
 }
 
@@ -96,7 +94,7 @@ to {
 
 .header-section p {
 	color: var(--secondary-color);
-	font-size: 1.1rem;
+	font-size: 1.05rem;
 }
 
 .icon-circle {
@@ -120,7 +118,7 @@ to {
 	font-size: 0.95rem;
 }
 
-.form-control {
+.form-control, .form-select {
 	border-radius: 12px;
 	padding: 12px 16px;
 	border: 1.5px solid #e2e8f0;
@@ -129,84 +127,47 @@ to {
 	font-size: 1rem;
 }
 
-.form-control:focus {
+.form-control:focus, .form-select:focus {
 	background-color: #fff;
 	border-color: var(--primary-color);
 	box-shadow: 0 0 0 4px var(--input-focus);
 	outline: none;
 }
 
-/* Custom File Upload */
-.file-upload-wrapper {
-	position: relative;
-	cursor: pointer;
-	border: 2px dashed #cbd5e1;
-	border-radius: 16px;
-	padding: 2rem;
-	text-align: center;
-	transition: all 0.3s ease;
-	background: #f1f5f9;
-}
-
-.file-upload-wrapper:hover {
-	border-color: var(--primary-color);
-	background: #f8fafc;
-}
-
-.file-upload-wrapper i {
-	font-size: 2.5rem;
-	color: var(--primary-color);
-	margin-bottom: 1rem;
-}
-
-.file-upload-input {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	opacity: 0;
-	cursor: pointer;
-}
-
-.file-name {
-	margin-top: 10px;
-	font-weight: 500;
-	color: var(--primary-color);
-}
-
-.btn-upload {
+.btn-submit {
 	background: linear-gradient(90deg, #0b7a75, #14b8a6);
 	color: white;
 	border: none;
 	padding: 14px 40px;
 	border-radius: 14px;
 	font-weight: 600;
-	font-size: 1.1rem;
+	font-size: 1.05rem;
 	letter-spacing: 0.5px;
 	transition: all 0.3s ease;
 	box-shadow: 0 10px 20px rgba(11, 122, 117, 0.2);
 	margin-top: 1.5rem;
 }
 
-.btn-upload:hover {
+.btn-submit:hover {
 	transform: translateY(-2px);
 	box-shadow: 0 15px 30px rgba(11, 122, 117, 0.3);
 	color: white;
 }
 
-.admin-note {
-	background: #f0fdfa;
-	border: 1px solid #99f6e4;
-	border-radius: 12px;
-	padding: 12px 14px;
-	font-size: 0.92rem;
-	color: #0f766e;
-	margin-top: 18px;
+.btn-submit:active {
+	transform: translateY(0);
 }
 
-.btn-upload:active {
-	transform: translateY(0);
+.back-btn {
+	display: inline-block;
+	margin-bottom: 16px;
+	text-decoration: none;
+	font-weight: 500;
+	color: #0b7a75;
+}
+
+.back-btn:hover {
+	color: #0a6662;
 }
 
 @media ( max-width : 992px) {
@@ -217,61 +178,88 @@ to {
 	.sidebar {
 		display: none;
 	}
+	.glass-card {
+		padding: 2rem 1.4rem;
+	}
 }
 </style>
 </head>
 
-<body data-admin-page="upload">
+<body data-admin-page="staff">
 
 	<%@ include file="Components/auth.jsp"%>
 	<%@ include file="adminSidebar.jsp"%>
+	<%@ include file="Components/loader.jsp"%>
 
 	<div class="main-content">
 
 		<%@ include file="Components/message.jsp"%>
 
-		<a href="managePatients.jsp" class="btn">← Back</a>
-		<div class="upload-container">
-			<div class="glass-card">
+		<a class="back-btn" href="admin-dashboard.jsp"><i
+			class="fa-solid fa-arrow-left"></i> Back</a>
 
+		<div class="staff-container">
+			<div class="glass-card">
 				<div class="header-section">
 					<div class="icon-circle">
-						<i class="fas fa-file-medical"></i>
+						<i class="fa-solid fa-user-plus"></i>
 					</div>
-					<h2>Add Patient</h2>
-					<p>Enter patient details for patient portal access.</p>
+					<h2>Add Staff</h2>
+					<p>Create a staff account for report upload and management.</p>
 				</div>
 
-				<form action="<%=request.getContextPath()%>/addPatient"
-					method="post">
+				<form id="addStaffForm"
+					action="<%=request.getContextPath()%>/addStaff" method="post">
 					<div class="row g-4">
 						<div class="col-md-6">
 							<label class="form-label">Full Name</label> <input type="text"
-								name="patientName" class="form-control"
-								placeholder="Enter Patient Name" required>
+								name="fullName" class="form-control"
+								placeholder="Enter Staff Name" required>
 						</div>
 
 						<div class="col-md-6">
 							<label class="form-label">Email Address</label> <input
 								type="email" name="email" class="form-control"
-								placeholder="Enter Patient Email">
+								placeholder="Enter Staff Email" required>
 						</div>
 
 						<div class="col-md-6">
 							<label class="form-label">Mobile Number</label> <input type="tel"
 								name="mobile" class="form-control"
-								placeholder="Enter Patient Mobile Number">
+								placeholder="Enter Staff Mobile Number" maxlength="15">
+						</div>
+
+						<div class="col-md-6">
+							<label class="form-label">Password</label> <input type="password"
+								name="password" class="form-control"
+								placeholder="Set Temporary Password" required>
+						</div>
+
+						<div class="col-md-6">
+							<label class="form-label">Role</label> <select
+								class="form-select" name="role">
+								<option value="STAFF" selected>STAFF</option>
+								<option value="ADMIN">ADMIN</option>
+							</select>
+
 						</div>
 					</div>
 
 					<div class="text-center">
-						<button type="submit" class="btn btn-upload">Submit
-							details</button>
+						<button type="submit" class="btn btn-submit">Create Staff
+							Account</button>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
+
+	<script>
+		document.getElementById("addStaffForm").addEventListener("submit",
+				function() {
+					showLoader();
+				});
+	</script>
 
 </body>
 
