@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,12 +22,12 @@
 	rel="stylesheet">
 
 
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/Css/app-theme.css">
 </head>
 
-<body>
+<body data-user-page="dashboard">
 
 	<%@ include file="userSidebar.jsp"%>
-	<%@ include file="../Components/auth.jsp"%>
 
 	<!-- Main Content -->
 	<div class="main-content">
@@ -35,7 +35,8 @@
 		<div class="dashboard-header">
 			<h2>
 				Welcome Back,
-				<%=u.getName()%></h2>
+				<%=u.getName()%>
+			</h2>
 			<p>View and manage your personal details and medical reports.</p>
 		</div>
 
@@ -58,7 +59,9 @@
 							<div class="detail-label">
 								<i class="fa-solid fa-user"></i> Full Name
 							</div>
-							<div class="detail-value"><%=u.getName()%></div>
+							<div class="detail-value">
+								<%=u.getName()%>
+							</div>
 						</div>
 
 						<!-- Email -->
@@ -66,7 +69,9 @@
 							<div class="detail-label">
 								<i class="fa-solid fa-envelope"></i> Email Address
 							</div>
-							<div class="detail-value"><%=u.getEmail()%></div>
+							<div class="detail-value">
+								<%=u.getEmail()%>
+							</div>
 						</div>
 
 						<!-- Mobile -->
@@ -74,7 +79,9 @@
 							<div class="detail-label">
 								<i class="fa-solid fa-phone"></i> Mobile Number
 							</div>
-							<div class="detail-value"><%=u.getMobile()%></div>
+							<div class="detail-value">
+								<%=u.getMobile()%>
+							</div>
 						</div>
 					</div>
 				</div>

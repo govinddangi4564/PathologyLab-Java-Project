@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -221,16 +221,30 @@ to {
 	}
 }
 </style>
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/Css/app-theme.css">
 </head>
 
 <body data-admin-page="upload">
 
 	<%@ include file="Components/auth.jsp"%>
-	<%@ include file="adminSidebar.jsp"%>
+
+	<%
+	String role = (String) mySession.getAttribute("role");
+	if ("STAFF".equals(role)) {
+	%>
+	<jsp:include page="Staff/staffSidebar.jsp" />
+	<%
+	} else if ("ADMIN".equals(role)) {
+	%>
+	<jsp:include page="adminSidebar.jsp" />
+	<%
+	}
+	%>
 
 	<div class="main-content">
 
-		<%@ include file="Components/message.jsp" %>
+		<%@ include file="Components/message.jsp"%>
 
 		<div class="upload-container">
 			<div class="glass-card">

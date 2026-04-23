@@ -17,9 +17,6 @@
 	integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
 	crossorigin="anonymous">
 
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
 	rel="stylesheet">
@@ -30,10 +27,9 @@
 	href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700&display=swap"
 	rel="stylesheet">
 <link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-	integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW0yAj8NmCah0bV3yQX4DJLGcJ8rP+M5iP4Y1wFgmfA=="
-	crossorigin="anonymous" referrerpolicy="no-referrer" />
+	href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
 
+<link rel="stylesheet" href="Css/app-theme.css">
 <link rel="stylesheet" href="Css/style.css">
 
 </head>
@@ -42,7 +38,8 @@
 
 	<nav class="navbar navbar-expand-lg sticky-top top-nav">
 		<div class="container py-2">
-			<a class="navbar-brand fw-bold" href="#">Pathology Lab</a>
+			<a class="navbar-brand fw-bold d-flex align-items-center gap-2"
+				href="#"><i class="fa-solid fa-microscope"></i> Pathology Lab</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#mainNav"
 				aria-controls="mainNav" aria-expanded="false"
@@ -124,6 +121,55 @@
 			</div>
 		</div>
 	</header>
+
+	<section class="quick-role-strip pb-3">
+		<div class="container">
+			<div class="row g-3">
+				<div class="col-md-4 reveal">
+					<div class="quick-role-card">
+						<div class="d-flex align-items-center gap-3">
+							<div class="quick-role-icon">
+								<i class="fa-solid fa-user"></i>
+							</div>
+							<div>
+								<h6>Patient Login</h6>
+								<p>View reports and download PDFs</p>
+							</div>
+						</div>
+						<a href="Pages/login.jsp" class="btn btn-sm btn-brand">Open</a>
+					</div>
+				</div>
+				<div class="col-md-4 reveal delay-1">
+					<div class="quick-role-card">
+						<div class="d-flex align-items-center gap-3">
+							<div class="quick-role-icon">
+								<i class="fa-solid fa-user-gear"></i>
+							</div>
+							<div>
+								<h6>Admin Console</h6>
+								<p>Manage patients and reports</p>
+							</div>
+						</div>
+						<a href="Pages/login.jsp" class="btn btn-sm btn-outline-brand">Open</a>
+					</div>
+				</div>
+				<div class="col-md-4 reveal delay-2">
+					<div class="quick-role-card">
+						<div class="d-flex align-items-center gap-3">
+							<div class="quick-role-icon">
+								<i class="fa-solid fa-vial-circle-check"></i>
+							</div>
+							<div>
+								<h6>Staff Workspace</h6>
+								<p>Upload and track diagnostics</p>
+							</div>
+						</div>
+						<a href="Pages/login.jsp" class="btn btn-sm btn-outline-brand">Open</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
 	<section id="portals" class="section-gap pt-0">
 		<div class="container">
@@ -344,9 +390,13 @@
 							%>
 						</div>
 
-						<p class="mb-3"><%=f.getMessage()%></p>
+						<p class="mb-3">
+							<%=f.getMessage()%>
+						</p>
 
-						<h6 class="mb-0 fw-bold"><%=f.getName()%></h6>
+						<h6 class="mb-0 fw-bold">
+							<%=f.getName()%>
+						</h6>
 						<small class="text-secondary">Patient</small>
 
 					</div>

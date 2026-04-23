@@ -1,4 +1,4 @@
-<%@page import="com.pathology.model.User"%>
+﻿<%@page import="com.pathology.model.User"%>
 <%@page import="com.pathology.dao.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -121,6 +121,7 @@ h1, h2, h3, h4, h5 {
 	}
 }
 </style>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/Css/app-theme.css">
 </head>
 
 <body>
@@ -135,7 +136,7 @@ h1, h2, h3, h4, h5 {
 							<div
 								class="d-flex justify-content-between align-items-center mb-3">
 								<h4 class="fw-bold mb-0">Enter OTP</h4>
-								<a class="back-link" href="forgetPassword.jsp">← Back</a>
+								<a class="back-link" href="forgetPassword.jsp">â† Back</a>
 							</div>
 
 							<%@ include file="Components/message.jsp"%>

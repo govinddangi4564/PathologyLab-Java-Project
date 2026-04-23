@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,6 +13,13 @@
 	rel="stylesheet"
 	integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
 	crossorigin="anonymous">
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+	rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
@@ -144,6 +151,8 @@ h1, h2, h3, h4, h5 {
 	}
 }
 </style>
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/Css/app-theme.css">
 </head>
 
 <body>
@@ -157,13 +166,13 @@ h1, h2, h3, h4, h5 {
 							<div
 								class="d-flex justify-content-between align-items-center mb-3">
 								<h4 class="fw-bold mb-0">Sign In</h4>
-								<a class="back-link" href="../index.jsp">← Back</a>
+								<a class="back-link" href="../index.jsp"><i
+									class="fa-solid fa-arrow-left"></i> Back</a>
 							</div>
 
 							<%@ include file="Components/message.jsp"%>
-							
-							<form method="post"
-								action="<%=request.getContextPath()%>/login">
+
+							<form method="post" action="<%=request.getContextPath()%>/login">
 								<div class="mb-3">
 									<label class="form-label" for="loginId">Email or Mobile</label>
 									<input type="text" class="form-control" id="loginId"
@@ -175,14 +184,18 @@ h1, h2, h3, h4, h5 {
 										type="password" class="form-control" id="password"
 										name="password" placeholder="Enter password" required>
 									<div class="text-end mt-2">
-										<a href="<%=request.getContextPath()%>/Pages/forgetPassword.jsp" class="back-link"
-											style="font-size: 0.9rem;">Forgot Password?</a>
+										<a
+											href="<%=request.getContextPath()%>/Pages/forgetPassword.jsp"
+											class="back-link" style="font-size: 0.9rem;">Forgot
+											Password?</a>
 									</div>
 								</div>
 								<button class="btn btn-brand w-100" type="submit">Login</button>
 							</form>
 							<p class="signup-text mb-0">
-								Don't have an account? <a href="<%=request.getContextPath()%>/Pages/signup.jsp">Sign Up</a>
+								Don't have an account? <a
+									href="<%=request.getContextPath()%>/Pages/signup.jsp">Sign
+									Up</a>
 							</p>
 						</div>
 					</div>

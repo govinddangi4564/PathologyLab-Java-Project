@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -116,6 +116,8 @@ h1, h2, h3, h4, h5 {
 	}
 }
 </style>
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/Css/app-theme.css">
 </head>
 
 <body>

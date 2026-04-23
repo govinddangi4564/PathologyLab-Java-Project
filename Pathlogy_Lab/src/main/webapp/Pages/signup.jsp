@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,6 +13,13 @@
 	rel="stylesheet"
 	integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
 	crossorigin="anonymous">
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+	rel="stylesheet">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link
@@ -104,6 +111,8 @@ h1, h2, h3, h4, h5 {
 	}
 }
 </style>
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/Css/app-theme.css">
 </head>
 
 <body>
@@ -118,7 +127,8 @@ h1, h2, h3, h4, h5 {
 								class="d-flex justify-content-between align-items-center mb-3">
 								<h4 class="fw-bold mb-0">Create Account</h4>
 								<a class="back-link"
-									href="<%=request.getContextPath()%>/index.jsp">← Back</a>
+									href="<%=request.getContextPath()%>/index.jsp"><i
+									class="fa-solid fa-arrow-left"></i> Back</a>
 							</div>
 
 							<%@ include file="Components/message.jsp"%>

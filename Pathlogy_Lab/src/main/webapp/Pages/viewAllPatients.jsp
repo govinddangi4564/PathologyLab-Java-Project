@@ -1,4 +1,4 @@
-<%@page import="com.pathology.dao.PatientDao"%>
+﻿<%@page import="com.pathology.dao.PatientDao"%>
 <%@page import="com.pathology.model.Patient"%>
 <%@page import="java.util.List"%>
 <%@page import="com.pathology.model.Report"%>
@@ -219,12 +219,14 @@ body {
 	margin-bottom: 16px;
 }
 </style>
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/Css/app-theme.css">
 </head>
 
-<body>
+<body data-admin-page="patients">
 
 	<%@ include file="Components/auth.jsp"%>
-	
+
 	<%
 	List<Patient> list = (List<Patient>) request.getAttribute("reportList");
 	%>
@@ -234,7 +236,18 @@ body {
 	int totalPatient = dao.totalPatients();
 	%>
 
-	<%@ include file="adminSidebar.jsp"%>
+	<%
+	String role = (String) mySession.getAttribute("role");
+	if ("STAFF".equals(role)) {
+	%>
+	<jsp:include page="Staff/staffSidebar.jsp" />
+	<%
+	} else if ("ADMIN".equals(role)) {
+	%>
+	<jsp:include page="adminSidebar.jsp" />
+	<%
+	}
+	%>
 
 
 	<div class="main-content">
@@ -243,7 +256,9 @@ body {
 		String msg = (String) request.getAttribute("msg");
 		if (msg != null) {
 		%>
-		<div class="alert alert-info"><%=msg%></div>
+		<div class="alert alert-info">
+			<%=msg%>
+		</div>
 		<%
 		}
 		%>
@@ -258,7 +273,9 @@ body {
 			<div class="table-header-row">
 				<div class="summary-box">
 					<div class="title">Total Patients</div>
-					<div class="count"><%=totalPatient%></div>
+					<div class="count">
+						<%=totalPatient%>
+					</div>
 				</div>
 				<div class="search-box">
 					<i class="fa-solid fa-search"></i> <input type="text"
@@ -275,9 +292,11 @@ body {
 						<li><a class="dropdown-item"
 							href="sortPatients?sort=id&order=desc">Oldest First</a></li>
 						<li><a class="dropdown-item"
-							href="sortPatients?sort=patient_name&order=asc">Name (A → Z)</a></li>
+							href="sortPatients?sort=patient_name&order=asc">Name (A â†’
+								Z)</a></li>
 						<li><a class="dropdown-item"
-							href="sortPatients?sort=patient_name&order=desc">Name (Z → A)</a></li>
+							href="sortPatients?sort=patient_name&order=desc">Name (Z â†’
+								A)</a></li>
 					</ul>
 				</div>
 				<div>

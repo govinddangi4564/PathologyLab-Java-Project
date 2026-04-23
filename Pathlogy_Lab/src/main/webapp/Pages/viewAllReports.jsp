@@ -1,4 +1,4 @@
-<%@page import="com.pathology.dao.ReportDao"%>
+﻿<%@page import="com.pathology.dao.ReportDao"%>
 <%@page import="jakarta.websocket.Session"%>
 <%@page import="java.util.List"%>
 <%@page import="com.pathology.model.Report"%>
@@ -109,13 +109,27 @@ body {
 	color: #92400e;
 }
 </style>
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/Css/app-theme.css">
 </head>
 
 <body data-admin-page="reports">
 
 	<%@ include file="Components/auth.jsp"%>
 
-	<%@ include file="adminSidebar.jsp"%>
+	<%
+	String role = (String) mySession.getAttribute("role");
+
+	if ("STAFF".equals(role)) {
+	%>
+	<jsp:include page="Staff/staffSidebar.jsp" />
+	<%
+	} else if ("ADMIN".equals(role)) {
+	%>
+	<jsp:include page="adminSidebar.jsp" />
+	<%
+	}
+	%>
 
 	<%
 	List<Report> list = (List<Report>) request.getAttribute("reportList");
