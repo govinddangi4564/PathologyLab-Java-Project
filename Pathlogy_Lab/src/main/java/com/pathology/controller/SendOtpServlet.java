@@ -1,5 +1,11 @@
 package com.pathology.controller;
 
+import java.io.IOException;
+import java.util.Properties;
+import java.util.ResourceBundle;
+
+import com.pathology.dao.UserDao;
+
 import jakarta.mail.Authenticator;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
@@ -14,11 +20,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
-import java.io.IOException;
-import java.util.Properties;
-
-import com.pathology.dao.UserDao;
 
 @WebServlet("/sendOtp")
 public class SendOtpServlet extends HttpServlet {
@@ -51,31 +52,33 @@ public class SendOtpServlet extends HttpServlet {
 
 		String otp = generateOtp();
 
-//		request.setAttribute("email", email);
-
 		session.setAttribute("email", email);
 		session.setAttribute("otpVerified", false);
 
 		int i = dao.storeOtp(email, otp);
 
-		String from = "govinddangi5811@gmail.com";
-		String appPass = "jrhcujbnbnkhzdlf";
+		// Load credentials from properties file
+		ResourceBundle bundle = ResourceBundle.getBundle("config");
+		String fromEmail = bundle.getString("email.from");
+		String appPass = bundle.getString("email.password");
+		String smtpHost = bundle.getString("email.smtp.host");
+		String smtpPort = bundle.getString("email.smtp.port");
 
 		Properties props = new Properties();
 		props.setProperty("mail.smtp.auth", "true");
 		props.setProperty("mail.smtp.starttls.enable", "true");
-		props.setProperty("mail.smtp.host", "smtp.gmail.com");
-		props.setProperty("mail.smtp.port", "587");
+		props.setProperty("mail.smtp.host", smtpHost);
+		props.setProperty("mail.smtp.port", smtpPort);
 
 		Session mailSession = Session.getInstance(props, new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(from, appPass);
+				return new PasswordAuthentication(fromEmail, appPass);
 			}
 		});
 
 		try {
 			MimeMessage msg = new MimeMessage(mailSession);
-			msg.setFrom(new InternetAddress(from));
+			msg.setFrom(new InternetAddress(fromEmail));
 			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
 			msg.setSubject("OTP for Password Reset - Pathology Lab");
 
