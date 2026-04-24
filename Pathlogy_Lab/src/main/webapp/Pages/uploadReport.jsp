@@ -284,16 +284,6 @@ to {
 							</select>
 						</div>
 
-						<div class="col-md-6">
-							<label class="form-label">Report Status</label> <select
-								name="reportStatus" class="form-control" required>
-								<option value="" disabled selected>Select Report Status</option>
-								<option value="Pending">Pending</option>
-								<option value="Completed">Completed</option>
-								<option value="Delivered">Delivered</option>
-							</select>
-						</div>
-
 						<div class="col-12 mt-4">
 							<label class="form-label">Report Document (PDF/Image)</label>
 							<div class="file-upload-wrapper">

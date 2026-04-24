@@ -21,6 +21,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 import com.pathology.dao.ReportDao;
 import com.pathology.model.Report;
@@ -45,14 +46,19 @@ public class SendReportByEmail extends HttpServlet {
 		String fileName = r.getReportPath();
 		String toEmail = r.getPatientEmail();
 
-		String fromEmail = "govinddangi5811@gmail.com";
-		String appPass = "jrhcujbnbnkhzdlf";
+		// Load credentials from properties file
+		ResourceBundle bundle = ResourceBundle.getBundle("config");
+		String fromEmail = bundle.getString("email.from");
+		String appPass = bundle.getString("email.password");
+		String smtpHost = bundle.getString("email.smtp.host");
+		String smtpPort = bundle.getString("email.smtp.port");
+		String reportsPath = bundle.getString("reports.path");
 
 		Properties props = new Properties();
 		props.setProperty("mail.smtp.auth", "true");
 		props.setProperty("mail.smtp.starttls.enable", "true");
-		props.setProperty("mail.smtp.host", "smtp.gmail.com");
-		props.setProperty("mail.smtp.port", "587");
+		props.setProperty("mail.smtp.host", smtpHost);
+		props.setProperty("mail.smtp.port", smtpPort);
 
 		Session mailSession = Session.getInstance(props, new Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
@@ -70,8 +76,7 @@ public class SendReportByEmail extends HttpServlet {
 			MimeBodyPart textPart = new MimeBodyPart();
 			textPart.setText("Dear Patient,\n\nYour report is attached.\n\nThank you.");
 
-			String fullPath = "D:\\All Codes\\Java FullStack Projects\\Pathlogy_Lab\\Pathlogy_Lab\\src\\main\\webapp\\reports\\"
-					+ fileName;
+			String fullPath = reportsPath + fileName;
 
 			File file = new File(fullPath);
 
@@ -86,7 +91,13 @@ public class SendReportByEmail extends HttpServlet {
 
 			try {
 				Transport.send(ms);
-				session.setAttribute("successMsg", "Report sent successfully!");
+
+				int i = dao.updateStatus(id);
+				int j = dao.markEmailSent(id);
+
+				if (i > 0 && j > 0) {
+					session.setAttribute("successMsg", "Report sent successfully!");
+				}
 			} catch (Exception e) {
 				session.setAttribute("errorMsg", "Failed to send email!");
 			}

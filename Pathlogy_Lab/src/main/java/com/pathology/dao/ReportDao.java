@@ -2,7 +2,6 @@ package com.pathology.dao;
 
 import java.sql.Connection;
 import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,7 +26,7 @@ public class ReportDao {
 			pst.setString(2, r.getPatientId());
 			pst.setString(3, r.getReportName());
 			pst.setString(4, r.getReportPath());
-			pst.setString(5, r.getStatus());
+			pst.setString(5, "Pending");
 
 			i = pst.executeUpdate();
 
@@ -41,7 +40,8 @@ public class ReportDao {
 		List<Report> list = new LinkedList<Report>();
 
 		try (Connection con = DBConnection.getConnection();
-				PreparedStatement pst = con.prepareStatement("select * from reports")) {
+				PreparedStatement pst = con.prepareStatement(
+						"SELECT r.*, p.patient_name FROM reports r JOIN patients p ON r.patient_id = p.patient_uid")) {
 
 			ResultSet rs = pst.executeQuery();
 
@@ -52,8 +52,10 @@ public class ReportDao {
 				String path = rs.getString("file_path");
 				Date dt = rs.getDate("upload_date");
 				String status = rs.getString("status");
+				boolean emailSent = rs.getBoolean("email_sent");
+				String patientName = rs.getString("patient_name");
 
-				list.add(new Report(id, patientId, report, path, dt, status));
+				list.add(new Report(id, patientId, report, path, dt, status, patientName, emailSent));
 			}
 
 		} catch (SQLException e) {
@@ -81,8 +83,9 @@ public class ReportDao {
 				String path = rs.getString("file_path");
 				Date dt = rs.getDate("upload_date");
 				String status = rs.getString("status");
+				boolean emailSent = rs.getBoolean("email_sent");
 
-				list.add(new Report(id, patientId, report, path, dt, status, patientName));
+				list.add(new Report(id, patientId, report, path, dt, status, patientName, emailSent));
 			}
 
 		} catch (SQLException e) {
@@ -277,5 +280,56 @@ public class ReportDao {
 			e.printStackTrace();
 		}
 		return r;
+	}
+
+	public int updateStatus(int id) {
+		int i = 0;
+
+		try (Connection con = DBConnection.getConnection();
+				PreparedStatement pst = con.prepareStatement("UPDATE reports SET status = ? WHERE id = ?")) {
+			pst.setString(1, "Completed");
+			pst.setInt(2, id);
+
+			i = pst.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return i;
+	}
+
+	public int markEmailSent(int reportId) {
+		int i = 0;
+
+		try (Connection con = DBConnection.getConnection();
+				PreparedStatement pst = con.prepareStatement("UPDATE reports SET email_sent = ? WHERE id = ?")) {
+			pst.setBoolean(1, true);
+			pst.setInt(2, reportId);
+
+			i = pst.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return i;
+	}
+
+	public int updateDeliverdStatus(int id) {
+		int i = 0;
+
+		try (Connection con = DBConnection.getConnection();
+				PreparedStatement pst = con.prepareStatement("UPDATE reports SET status = ? WHERE id = ?")) {
+			pst.setString(1, "Delivered");
+			pst.setInt(2, id);
+
+			i = pst.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return i;
 	}
 }

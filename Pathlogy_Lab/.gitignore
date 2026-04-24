@@ -1,1 +1,24 @@
+# Credentials & Configuration
+src/main/resources/config.properties
+
+# Build
 /target/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp files
+*.tmp
+*.log

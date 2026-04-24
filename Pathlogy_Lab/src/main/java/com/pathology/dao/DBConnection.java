@@ -3,13 +3,16 @@ package com.pathology.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
 public class DBConnection {
 
-	private static final String URL = "jdbc:mysql://localhost:3306/pathology_lab";
-	private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-	private static final String USERNAME = "root";
-	private static final String PASSWORD = "Govind";
+	private static final ResourceBundle bundle = ResourceBundle.getBundle("config");
+	
+	private static final String URL = bundle.getString("db.url");
+	private static final String DRIVER = bundle.getString("db.driver");
+	private static final String USERNAME = bundle.getString("db.username");
+	private static final String PASSWORD = bundle.getString("db.password");
 
 	public static Connection getConnection() {
 		Connection con = null;

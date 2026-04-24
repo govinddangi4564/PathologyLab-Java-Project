@@ -58,7 +58,7 @@ public class UploadReport extends HttpServlet {
 		String report = System.currentTimeMillis() + "_" + pt.getSubmittedFileName();
 		pt.write(path + File.separator + report);
 
-		Report r = new Report(userId, patientId, title, report, reportStatus);
+		Report r = new Report(userId, patientId, title, report);
 
 		ReportDao dao = new ReportDao();
 

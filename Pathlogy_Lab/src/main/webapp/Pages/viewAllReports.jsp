@@ -108,6 +108,31 @@ body {
 	background: #fef3c7;
 	color: #92400e;
 }
+
+.badge-soft {
+	padding: 5px 10px;
+	border-radius: 12px;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+/* Pending - Yellow */
+.badge-pending {
+	background-color: #fff3cd;
+	color: #856404;
+}
+
+/* Completed - Blue */
+.badge-completed {
+	background-color: #cce5ff;
+	color: #004085;
+}
+
+/* Delivered - Green */
+.badge-delivered {
+	background-color: #d4edda;
+	color: #155724;
+}
 </style>
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/Css/app-theme.css">
@@ -119,7 +144,6 @@ body {
 
 	<%
 	String role = (String) mySession.getAttribute("role");
-
 	if ("STAFF".equals(role)) {
 	%>
 	<jsp:include page="Staff/staffSidebar.jsp" />
@@ -154,19 +178,27 @@ body {
 		<div class="summary-grid">
 			<div class="summary-box">
 				<div class="title">Total Reports</div>
-				<div class="count"><%=totalReport%></div>
+				<div class="count">
+					<%=totalReport%>
+				</div>
 			</div>
 
 			<div class="summary-box">
 				<div class="title">Pending Reports</div>
-				<div class="count"><%=pending%></div>
+				<div class="count">
+					<%=pending%>
+				</div>
 			</div>
 			<div class="summary-box">
 				<div class="title">Complete Reports</div>
-				<div class="count"><%=complete%></div>
+				<div class="count">
+					<%=complete%>
+				</div>
 			</div>
 			<div class="summary-box">
-				<div class="count"><%=delivered%></div>
+				<div class="count">
+					<%=delivered%>
+				</div>
 				<div class="title">Delivered reports</div>
 			</div>
 		</div>
@@ -188,14 +220,14 @@ body {
 						<select class="form-select" name="type">
 							<option value="">All Types</option>
 							<option value="Blood Test">Blood Test</option>
-								<option value="X-Ray">X-Ray</option>
-								<option value="MRI Scan">MRI Scan</option>
-								<option value="CT Scan">CT Scan</option>
-								<option value="Ultrasound">Ultrasound</option>
-								<option value="Urine Test">Urine Test</option>
-								<option value="Biopsy">Biopsy</option>
-								<option value="ECG">ECG</option>
-								<option value="Other">Other</option>
+							<option value="X-Ray">X-Ray</option>
+							<option value="MRI Scan">MRI Scan</option>
+							<option value="CT Scan">CT Scan</option>
+							<option value="Ultrasound">Ultrasound</option>
+							<option value="Urine Test">Urine Test</option>
+							<option value="Biopsy">Biopsy</option>
+							<option value="ECG">ECG</option>
+							<option value="Other">Other</option>
 						</select>
 					</div>
 
@@ -224,6 +256,7 @@ body {
 					<tr>
 						<th>S.No</th>
 						<th>Patient ID</th>
+						<th>Patient Name</th>
 						<th>Report Name</th>
 						<th>Date</th>
 						<th>Status</th>
@@ -242,10 +275,23 @@ body {
 					<tr>
 						<td><%=count++%></td>
 						<td><%=r.getPatientId()%></td>
+						<td><%=r.getPatientName()%></td>
 						<td><%=r.getReportName()%></td>
 						<td><%=r.getReportDate()%></td>
-						<td><span class="badge-soft badge-published"> <%=r.getStatus()%>
-						</span></td>
+						<td>
+							<%
+							String status = r.getStatus();
+							String badgeClass = "";
+							if ("Pending".equalsIgnoreCase(status)) {
+								badgeClass = "badge-pending";
+							} else if ("Completed".equalsIgnoreCase(status)) {
+								badgeClass = "badge-completed";
+							} else if ("Delivered".equalsIgnoreCase(status)) {
+								badgeClass = "badge-delivered";
+							}
+							%> <span class="badge-soft <%=badgeClass%>"> <%=status%>
+						</span>
+						</td>
 
 						<td>
 							<div class="d-flex gap-2">
@@ -260,12 +306,28 @@ body {
 									onclick="return confirm('Are you sure you want to delete this report?');">
 									Delete </a>
 
-								<!-- Send Email Button -->
-								<form action="sendReport" method="post" class="m-0">
+								<!-- Send / Resend Button -->
+								<form action="sendReport" method="post" class="m-0 d-inline">
 									<input type="hidden" name="id" value="<%=r.getId()%>">
+
 									<button type="submit" class="btn btn-primary btn-sm">
-										Send</button>
+										<%=r.isEmailSent() ? "Resend" : "Send"%>
+									</button>
 								</form>
+								<!-- Show Deliver Button ONLY if email is sent and not delivered -->
+								<%
+								String sts = r.getStatus();
+								if ("Completed".equalsIgnoreCase(status)) {
+								%>
+								<form action="updateReportStatus" method="post"
+									class="m-0 d-inline">
+									<input type="hidden" name="id" value="<%=r.getId()%>">
+									<button type="submit" class="btn btn-success btn-sm">
+										Mark as Delivered</button>
+								</form>
+								<%
+								}
+								%>
 
 							</div>
 						</td>
@@ -282,15 +344,15 @@ body {
 	</div>
 
 	<script>
-setTimeout(function() {
-    let alert = document.getElementById("alertMsg");
-    if (alert) {
-        alert.classList.remove("show");
-        alert.classList.add("fade");
-        setTimeout(() => alert.remove(), 500);
-    }
-}, 3000); // 3 seconds
-</script>
+														setTimeout(function () {
+															let alert = document.getElementById("alertMsg");
+															if (alert) {
+																alert.classList.remove("show");
+																alert.classList.add("fade");
+																setTimeout(() => alert.remove(), 500);
+															}
+														}, 3000); // 3 seconds
+													</script>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>

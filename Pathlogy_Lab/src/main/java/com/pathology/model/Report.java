@@ -17,29 +17,11 @@ public class Report {
 	private String reportPath;
 	private Date reportDate;
 	private String status;
+	private boolean emailSent;
 
 	private String patientName;
 
 	private String patientEmail;
-
-	public Report(int userId, String patientId, String reportName, String reportPath, String status) {
-		super();
-		this.userId = userId;
-		this.patientId = patientId;
-		this.reportName = reportName;
-		this.reportPath = reportPath;
-		this.status = status;
-	}
-
-	public Report(int id, String patientId, String reportName, String reportPath, Date reportDate, String status) {
-		super();
-		this.id = id;
-		this.patientId = patientId;
-		this.reportName = reportName;
-		this.reportPath = reportPath;
-		this.reportDate = reportDate;
-		this.status = status;
-	}
 
 	public Report(int id, String reportName, String reportPath, Date reportDate, String status, String patientName) {
 		super();
@@ -52,7 +34,7 @@ public class Report {
 	}
 
 	public Report(int id, String patientId, String reportName, String reportPath, Date reportDate, String status,
-			String patientName) {
+			String patientName, boolean emailSent) {
 		super();
 		this.id = id;
 		this.patientId = patientId;
@@ -61,12 +43,31 @@ public class Report {
 		this.reportDate = reportDate;
 		this.status = status;
 		this.patientName = patientName;
+		this.emailSent = emailSent;
 	}
 
 	public Report(String reportPath, String patientEmail) {
 		super();
 		this.reportPath = reportPath;
 		this.patientEmail = patientEmail;
+	}
+
+	public Report(int userId, String patientId, String reportName, String reportPath) {
+		super();
+		this.userId = userId;
+		this.patientId = patientId;
+		this.reportName = reportName;
+		this.reportPath = reportPath;
+	}
+
+	public Report(int id, String patientId, String reportName, String reportPath, Date reportDate, String status) {
+		super();
+		this.id = id;
+		this.patientId = patientId;
+		this.reportName = reportName;
+		this.reportPath = reportPath;
+		this.reportDate = reportDate;
+		this.status = status;
 	}
 
 }
