@@ -244,7 +244,8 @@ to {
 
 		<%@ include file="Components/message.jsp"%>
 
-		<a href="managePatients.jsp" class="btn">â† Back</a>
+		<a href="managePatients.jsp" class="btn"><i
+			class="fa-solid fa-arrow-left"></i> Back</a>
 		<div class="upload-container">
 			<div class="glass-card">
 

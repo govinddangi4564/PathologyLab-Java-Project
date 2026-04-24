@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -178,33 +179,53 @@ public class ReportDao {
 		return count;
 	}
 
-	public List<Report> searchReport(String key) {
-		List<Report> list = new LinkedList<Report>();
+	public List<Report> filterReport(String search, String type, String status) {
 
-		try (Connection con = DBConnection.getConnection();
-				PreparedStatement pst = con.prepareStatement(
-						"SELECT * FROM reports WHERE report_name LIKE ? OR patient_id LIKE ? OR status LIKE ?")) {
+		List<Report> list = new ArrayList<Report>();
 
-			pst.setString(1, "%" + key + "%");
-			pst.setString(2, "%" + key + "%");
-			pst.setString(3, "%" + key + "%");
+		String query = "SELECT * FROM reports WHERE 1=1";
+
+		if (search != null && !search.isEmpty()) {
+			query += " AND (report_name LIKE ? OR patient_id LIKE ? OR status LIKE ?)";
+		}
+
+		if (type != null && !type.isEmpty()) {
+			query += " AND report_name = ?";
+		}
+
+		if (status != null && !status.isEmpty()) {
+			query += " AND status = ?";
+		}
+
+		try (Connection con = DBConnection.getConnection(); PreparedStatement pst = con.prepareStatement(query)) {
+
+			int i = 1;
+
+			if (search != null && !search.isEmpty()) {
+				pst.setString(i++, "%" + search + "%");
+				pst.setString(i++, "%" + search + "%");
+				pst.setString(i++, "%" + search + "%");
+			}
+
+			if (type != null && !type.isEmpty()) {
+				pst.setString(i++, type);
+			}
+
+			if (status != null && !status.isEmpty()) {
+				pst.setString(i++, status);
+			}
 
 			ResultSet rs = pst.executeQuery();
 
 			while (rs.next()) {
-				int id = rs.getInt("id");
-				String patientId = rs.getString("patient_id");
-				String report = rs.getString("report_name");
-				String path = rs.getString("file_path");
-				Date dt = rs.getDate("upload_date");
-				String status = rs.getString("status");
-
-				list.add(new Report(id, patientId, report, path, dt, status));
+				list.add(new Report(rs.getInt("id"), rs.getString("patient_id"), rs.getString("report_name"),
+						rs.getString("file_path"), rs.getDate("upload_date"), rs.getString("status")));
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
 		return list;
 	}
 

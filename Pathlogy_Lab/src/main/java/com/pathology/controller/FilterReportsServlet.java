@@ -13,8 +13,8 @@ import com.pathology.dao.ReportDao;
 import com.pathology.model.Patient;
 import com.pathology.model.Report;
 
-@WebServlet(urlPatterns = { "/searchPatient", "/searchReport" })
-public class SearchServlet extends HttpServlet {
+@WebServlet(urlPatterns = { "/searchPatient", "/filterReport" })
+public class FilterReportsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -29,13 +29,17 @@ public class SearchServlet extends HttpServlet {
 			request.setAttribute("patientList", list);
 			request.getRequestDispatcher("./Pages/viewAllPatients.jsp").forward(request, response);
 
-		} else if (path.equals("/searchReport")) {
-			String key = request.getParameter("search");
+		} else if (path.equals("/filterReport")) {
+			String search = request.getParameter("search");
+			String type = request.getParameter("type");
+			String status = request.getParameter("status");
+
 			ReportDao dao = new ReportDao();
-			List<Report> list = dao.searchReport(key);
+			List<Report> list = dao.filterReport(search, type, status);
 
 			request.setAttribute("reportList", list);
 			request.getRequestDispatcher("./Pages/viewAllReports.jsp").forward(request, response);
+
 		}
 	}
 

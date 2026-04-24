@@ -122,7 +122,8 @@ h1, h2, h3, h4, h5 {
 	}
 }
 </style>
-<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/Css/app-theme.css">
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/Css/app-theme.css">
 </head>
 
 <body>
@@ -135,10 +136,11 @@ h1, h2, h3, h4, h5 {
 							<div
 								class="d-flex justify-content-between align-items-center mb-3">
 								<h4 class="fw-bold mb-0">Reset Password</h4>
-								<a class="back-link" href="login.jsp">â† Back</a>
+								<a class="back-link" href="login.jsp"><i
+									class="fa-solid fa-arrow-left"></i> Back</a>
 							</div>
-							
-							<%@ include file="Components/message.jsp" %>
+
+							<%@ include file="Components/message.jsp"%>
 
 							<form method="post"
 								action="<%=request.getContextPath()%>/sendOtp">

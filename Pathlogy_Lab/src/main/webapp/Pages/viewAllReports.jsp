@@ -166,38 +166,50 @@ body {
 				<div class="count"><%=complete%></div>
 			</div>
 			<div class="summary-box">
-				<div class="title">Delivered reports</div>
 				<div class="count"><%=delivered%></div>
+				<div class="title">Delivered reports</div>
 			</div>
 		</div>
 
 		<div class="panel">
 			<div class="row g-2 filter-row mb-3">
-				<form action="searchReport" method="get" class="d-flex w-100 gap-2">
+				<form action="<%=request.getContextPath()%>/filterReport"
+					method="get" class="d-flex w-100 gap-2">
 
+					<!-- Search Input -->
 					<div class="col-md-4">
 						<input type="text" id="searchInput" class="form-control"
 							name="search"
 							placeholder="Search by patient ID, report name or status">
 					</div>
 
+					<!-- Report Type -->
 					<div class="col-md-3">
 						<select class="form-select" name="type">
-							<option selected>All Types</option>
-							<option>Blood Test</option>
-							<option>X-Ray</option>
-							<option>MRI</option>
+							<option value="">All Types</option>
+							<option value="Blood Test">Blood Test</option>
+								<option value="X-Ray">X-Ray</option>
+								<option value="MRI Scan">MRI Scan</option>
+								<option value="CT Scan">CT Scan</option>
+								<option value="Ultrasound">Ultrasound</option>
+								<option value="Urine Test">Urine Test</option>
+								<option value="Biopsy">Biopsy</option>
+								<option value="ECG">ECG</option>
+								<option value="Other">Other</option>
 						</select>
 					</div>
 
+					<!-- Status -->
 					<div class="col-md-2">
 						<select class="form-select" name="status">
-							<option selected>All Status</option>
-							<option>Published</option>
-							<option>Pending</option>
+							<option value="">All Status</option>
+							<option value="Pending">Pending</option>
+							<option value="Completed">Complete</option>
+							<option value="Delivered">Delivered</option>
 						</select>
 					</div>
 
+					<!-- Button -->
 					<div class="col-md-2 d-grid">
 						<button type="submit" class="btn btn-outline-secondary">
 							Filter</button>
