@@ -15,7 +15,8 @@ import com.pathology.model.Patient;
 import com.pathology.model.Report;
 import com.pathology.model.User;
 
-@WebServlet(urlPatterns = { "/viewPatients", "/viewAllReports", "/viewReport", "/viewStaff" })
+@WebServlet(urlPatterns = { "/viewPatients", "/viewAllPatientByOffset", "/viewAllReports", "/viewReport",
+		"/viewAllReportsByOffset", "/viewStaff" })
 public class ViewReports extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -56,6 +57,24 @@ public class ViewReports extends HttpServlet {
 
 			request.setAttribute("staffList", list);
 			request.getRequestDispatcher("./Pages/viewStaff.jsp").forward(request, response);
+
+		} else if (path.equals("/viewAllReportsByOffset")) {
+
+			int offset = Integer.parseInt(request.getParameter("offset"));
+			ReportDao dao = new ReportDao();
+			List<Report> list = dao.reportList(offset);
+
+			request.setAttribute("reportList", list);
+			request.getRequestDispatcher("Pages/viewAllReports.jsp").forward(request, response);
+
+		} else if (path.equals("/viewAllPatientByOffset")) {
+
+			int offset = Integer.parseInt(request.getParameter("offset"));
+			PatientDao dao = new PatientDao();
+			List<Patient> list = dao.viewAllPatients(offset);
+
+			request.setAttribute("patientList", list);
+			request.getRequestDispatcher("Pages/viewAllPatients.jsp").forward(request, response);
 		}
 	}
 }

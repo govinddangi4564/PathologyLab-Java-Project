@@ -64,8 +64,27 @@ public class PatientDao {
 		List<Patient> list = new LinkedList<Patient>();
 
 		try (Connection con = DBConnection.getConnection();
-				PreparedStatement pst = con.prepareStatement("SELECT * FROM patients")) {
+				PreparedStatement pst = con.prepareStatement("SELECT * FROM patients LIMIT 15 OFFSET 0")) {
 
+			ResultSet rs = pst.executeQuery();
+
+			while (rs.next()) {
+				list.add(new Patient(rs.getString("patient_uid"), rs.getString("patient_name"),
+						rs.getString("patient_email"), rs.getString("patient_mobile")));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public List<Patient> viewAllPatients(int offset) {
+		List<Patient> list = new LinkedList<Patient>();
+
+		try (Connection con = DBConnection.getConnection();
+				PreparedStatement pst = con.prepareStatement("SELECT * FROM patient LIMIT 15 OFFSET ?")) {
+			pst.setInt(1, offset);
 			ResultSet rs = pst.executeQuery();
 
 			while (rs.next()) {
@@ -83,7 +102,8 @@ public class PatientDao {
 		List<Patient> list = new LinkedList<Patient>();
 
 		try (Connection con = DBConnection.getConnection();
-				PreparedStatement pst = con.prepareStatement("SELECT * FROM patients ORDER BY " + sort + " " + order)) {
+				PreparedStatement pst = con.prepareStatement(
+						"SELECT * FROM patients ORDER BY " + sort + " " + order + " LIMIT 15 OFFSET 0")) {
 
 			ResultSet rs = pst.executeQuery();
 
@@ -137,7 +157,7 @@ public class PatientDao {
 
 		try (Connection con = DBConnection.getConnection();
 				PreparedStatement pst = con.prepareStatement(
-						"SELECT * FROM patients where patient_uid LIKE ? OR patient_name LIKE ? OR patient_email LIKE ? OR patient_mobile LIKE ?")) {
+						"SELECT * FROM patients where patient_uid LIKE ? OR patient_name LIKE ? OR patient_email LIKE ? OR patient_mobile LIKE ? LIMIT 15 OFFSET 0")) {
 
 			pst.setString(1, "%" + key + "%");
 			pst.setString(2, "%" + key + "%");

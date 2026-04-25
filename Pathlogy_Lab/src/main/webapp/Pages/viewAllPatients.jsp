@@ -252,16 +252,7 @@ body {
 
 	<div class="main-content">
 
-		<%
-		String msg = (String) request.getAttribute("msg");
-		if (msg != null) {
-		%>
-		<div class="alert alert-info">
-			<%=msg%>
-		</div>
-		<%
-		}
-		%>
+		<%@ include file="Components/message.jsp"%>
 
 		<div class="dashboard-header">
 			<h2 class="page-title">Patient Reports Overview</h2>
@@ -356,8 +347,39 @@ body {
 
 				</table>
 			</div>
+			<div class="pagination-wrap">
+				<nav aria-label="Reports pagination">
+					<ul class="pagination justify-content-center mb-0">
+
+						<%
+						if (totalPatient < 15) {
+
+						} else {
+							for (int i = 0, j = 1; i <= totalPatient; i = i + 15, j++) {
+						%>
+
+						<li class="page-item active"><a class="page-link"
+							href="<%=request.getContextPath()%>/viewAllPatientByOffset?offset=<%=i%>"><%=j%></a></li>
+						<%
+						}
+						}
+						%>
+					</ul>
+				</nav>
+			</div>
 		</div>
 	</div>
+
+	<script>
+	setTimeout(function () {
+		let alert = document.getElementById("alertMsg");
+		if (alert) {
+			alert.classList.remove("show");
+			alert.classList.add("fade");
+			setTimeout(() => alert.remove(), 500);
+		}
+	}, 3000);
+	</script>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>

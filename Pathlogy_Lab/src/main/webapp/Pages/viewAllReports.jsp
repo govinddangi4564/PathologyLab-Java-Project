@@ -25,63 +25,80 @@
 <style>
 body {
 	font-family: 'Outfit', sans-serif;
-	background: #f8fafc;
+	background: #f8f9fa;
+}
+
+.main-content {
+	max-width: 1240px;
+	margin: 0 auto;
+	padding: 24px 16px 40px;
+	float: none;
+}
+
+.page-header {
+	text-align: center;
+	margin-bottom: 20px;
 }
 
 .page-title {
 	font-weight: 700;
 	font-size: 1.8rem;
-	margin-bottom: 4px;
+	margin-bottom: 6px;
 }
 
 .page-subtitle {
 	color: #64748b;
-	margin-bottom: 18px;
+	margin-bottom: 0;
+	font-size: 0.95rem;
 }
 
 .summary-grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-	gap: 12px;
-	margin-bottom: 18px;
+	margin: 0 auto 20px;
 }
 
 .summary-box {
 	background: #fff;
-	border: 1px solid #e2e8f0;
-	border-radius: 14px;
-	padding: 14px;
+	border: 1px solid #dee2e6;
+	border-radius: 0.75rem;
+	padding: 1rem;
+	text-align: center;
 }
 
 .summary-box .title {
-	font-size: 0.85rem;
-	color: #64748b;
+	font-size: 0.82rem;
+	color: #6c757d;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
 }
 
 .summary-box .count {
-	font-size: 1.35rem;
+	font-size: 1.5rem;
 	font-weight: 700;
-	margin: 2px 0 0;
+	margin-top: 4px;
 }
 
 .panel {
 	background: #fff;
-	border: 1px solid #e2e8f0;
-	border-radius: 16px;
-	padding: 16px;
-	box-shadow: 0 10px 22px rgba(15, 23, 42, 0.05);
+	border: 1px solid #dee2e6;
+	border-radius: 0.75rem;
+	padding: 1rem;
 }
 
 .filter-row .form-control, .filter-row .form-select {
-	border-radius: 10px;
+	border-radius: 0.5rem;
+	min-height: 42px;
+}
+
+.filter-row .btn {
+	height: 42px;
 }
 
 .table thead th {
-	background: #0f172a;
-	color: #fff;
+	background: #f8f9fa;
+	color: #212529;
 	font-weight: 600;
 	font-size: 0.9rem;
-	border: none;
+	border-bottom: 1px solid #dee2e6;
 }
 
 .table tbody td {
@@ -89,13 +106,13 @@ body {
 }
 
 .table tbody tr:hover {
-	background: #f8fafc;
+	background: #f8f9fa;
 }
 
 .badge-soft {
-	padding: 6px 10px;
-	border-radius: 999px;
-	font-size: 0.75rem;
+	padding: 0.4rem 0.75rem;
+	border-radius: 50rem;
+	font-size: 0.76rem;
 	font-weight: 700;
 }
 
@@ -132,6 +149,126 @@ body {
 .badge-delivered {
 	background-color: #d4edda;
 	color: #155724;
+}
+
+.actions-wrap {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	flex-wrap: wrap;
+	min-width: 300px;
+}
+
+.actions-wrap .btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	height: 34px;
+	min-width: 110px;
+	padding: 0 12px;
+	white-space: nowrap;
+	font-weight: 600;
+	border-radius: 0.5rem;
+}
+
+.actions-wrap form {
+	margin: 0;
+}
+
+.actions-wrap form .btn {
+	width: 100%;
+}
+
+.pagination-wrap {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 14px;
+	flex-wrap: wrap;
+	padding-top: 1rem;
+	border-top: 1px solid #dee2e6;
+	margin-top: 1rem;
+}
+
+.pagination-summary {
+	font-size: 0.9rem;
+	color: #64748b;
+}
+
+.pagination {
+	gap: 4px;
+}
+
+.pagination .page-link {
+	color: #0d6efd;
+	border-color: #dee2e6;
+	font-weight: 600;
+	border-radius: 0.5rem;
+	min-width: 40px;
+	text-align: center;
+}
+
+.pagination .page-item.active .page-link {
+	background: #0d6efd;
+	border-color: #0d6efd;
+	color: #fff;
+}
+
+@media ( max-width : 768px) {
+	.page-title {
+		font-size: 1.4rem;
+	}
+	.page-subtitle {
+		font-size: 0.92rem;
+		margin-bottom: 14px;
+	}
+	.panel {
+		padding: 1rem;
+	}
+	.summary-grid {
+		margin-bottom: 1rem;
+	}
+	.table thead th {
+		font-size: 0.78rem;
+		white-space: nowrap;
+	}
+	.table tbody td {
+		font-size: 0.82rem;
+		white-space: nowrap;
+	}
+	.actions-wrap {
+		min-width: 210px;
+	}
+	.actions-wrap .btn, .actions-wrap form {
+		flex: 1 1 calc(50% - 8px);
+		min-width: 0;
+	}
+	.actions-wrap form .btn {
+		width: 100%;
+	}
+	.pagination-wrap {
+		flex-direction: column;
+		align-items: stretch;
+	}
+	.pagination-wrap .pagination {
+		justify-content: center;
+	}
+	.pagination-summary {
+		text-align: center;
+	}
+}
+
+@media ( max-width : 480px) {
+	.summary-grid {
+		margin-bottom: 1rem;
+	}
+	.actions-wrap {
+		min-width: 180px;
+	}
+	.actions-wrap .btn, .actions-wrap form {
+		flex: 1 1 100%;
+	}
 }
 </style>
 <link rel="stylesheet" type="text/css"
@@ -171,52 +308,62 @@ body {
 
 		<%@ include file="Components/message.jsp"%>
 
-		<h2 class="page-title">All Reports</h2>
-		<p class="page-subtitle">Review uploaded records, check statuses,
-			and take admin actions.</p>
+		<div class="page-header">
+			<h2 class="page-title">All Reports</h2>
+			<p class="page-subtitle">Review uploaded records, check statuses,
+				and take admin actions.</p>
+		</div>
 
-		<div class="summary-grid">
-			<div class="summary-box">
-				<div class="title">Total Reports</div>
-				<div class="count">
-					<%=totalReport%>
+		<div class="summary-grid row g-3 justify-content-center">
+			<div class="col-12 col-sm-6 col-xl-3">
+				<div class="summary-box h-100">
+					<div class="title">Total Reports</div>
+					<div class="count">
+						<%=totalReport%>
+					</div>
 				</div>
 			</div>
 
-			<div class="summary-box">
-				<div class="title">Pending Reports</div>
-				<div class="count">
-					<%=pending%>
+			<div class="col-12 col-sm-6 col-xl-3">
+				<div class="summary-box h-100">
+					<div class="title">Pending Reports</div>
+					<div class="count">
+						<%=pending%>
+					</div>
 				</div>
 			</div>
-			<div class="summary-box">
-				<div class="title">Complete Reports</div>
-				<div class="count">
-					<%=complete%>
+			<div class="col-12 col-sm-6 col-xl-3">
+				<div class="summary-box h-100">
+					<div class="title">Complete Reports</div>
+					<div class="count">
+						<%=complete%>
+					</div>
 				</div>
 			</div>
-			<div class="summary-box">
-				<div class="count">
-					<%=delivered%>
+			<div class="col-12 col-sm-6 col-xl-3">
+				<div class="summary-box h-100">
+					<div class="count">
+						<%=delivered%>
+					</div>
+					<div class="title">Delivered reports</div>
 				</div>
-				<div class="title">Delivered reports</div>
 			</div>
 		</div>
 
-		<div class="panel">
+		<div class="panel card shadow-sm">
 			<div class="row g-2 filter-row mb-3">
 				<form action="<%=request.getContextPath()%>/filterReport"
-					method="get" class="d-flex w-100 gap-3">
+					method="get" class="row g-2 w-100 align-items-end mx-0">
 
 					<!-- Search Input -->
-					<div class="col-md-3">
+					<div class="col-12 col-sm-6 col-lg-4">
 						<input type="text" id="searchInput" class="form-control"
 							name="search"
 							placeholder="Search by patient ID, report name or status">
 					</div>
 
 					<!-- Report Type -->
-					<div class="col-md-2">
+					<div class="col-6 col-sm-6 col-lg-2">
 						<select class="form-select" name="type">
 							<option value="">All Types</option>
 							<option value="Blood Test">Blood Test</option>
@@ -232,7 +379,7 @@ body {
 					</div>
 
 					<!-- Status -->
-					<div class="col-md-2">
+					<div class="col-6 col-sm-6 col-lg-2">
 						<select class="form-select" name="status">
 							<option value="">All Status</option>
 							<option value="Pending">Pending</option>
@@ -242,7 +389,7 @@ body {
 					</div>
 
 					<!-- Sort -->
-					<div class="col-md-2">
+					<div class="col-6 col-sm-6 col-lg-2">
 						<select class="form-select" name="sort">
 							<option value="">Sort By</option>
 							<option value="date_desc">Newest First</option>
@@ -253,7 +400,7 @@ body {
 					</div>
 
 					<!-- Button -->
-					<div class="col-md-2 d-grid">
+					<div class="col-6 col-sm-6 col-lg-2 d-grid">
 						<button type="submit" class="btn btn-outline-secondary">
 							Filter</button>
 					</div>
@@ -262,107 +409,133 @@ body {
 			</div>
 
 
-			<table class="table table-hover align-middle mb-0">
-				<thead>
-					<tr>
-						<th>S.No</th>
-						<th>Patient ID</th>
-						<th>Patient Name</th>
-						<th>Report Name</th>
-						<th>Date</th>
-						<th>Status</th>
-						<th>Action</th>
-					</tr>
-				</thead>
+			<div class="table-responsive">
+				<table class="table table-hover align-middle mb-0">
+					<thead>
+						<tr>
+							<th>S.No</th>
+							<th>Patient ID</th>
+							<th>Patient Name</th>
+							<th>Report Name</th>
+							<th>Date</th>
+							<th>Status</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody id="reportTable">
 
-				<%
-				int count = 1;
-				if (list != null) {
-					for (Report r : list) {
-				%>
-
-
-				<tbody id="reportTable">
-					<tr>
-						<td><%=count++%></td>
-						<td><%=r.getPatientId()%></td>
-						<td><%=r.getPatientName()%></td>
-						<td><%=r.getReportName()%></td>
-						<td><%=r.getReportDate()%></td>
-						<td>
-							<%
-							String status = r.getStatus();
-							String badgeClass = "";
-							if ("Pending".equalsIgnoreCase(status)) {
-								badgeClass = "badge-pending";
-							} else if ("Completed".equalsIgnoreCase(status)) {
-								badgeClass = "badge-completed";
-							} else if ("Delivered".equalsIgnoreCase(status)) {
-								badgeClass = "badge-delivered";
-							}
-							%> <span class="badge-soft <%=badgeClass%>"> <%=status%>
-						</span>
-						</td>
-
-						<td>
-							<div class="d-flex gap-2 align-items-center">
-
-								<!-- Download -->
-								<a href="downloadReport?file=<%=r.getReportPath()%>"
-									class="btn btn-outline-success btn-sm"> Download </a>
-
-								<!-- Delete -->
-								<a href="deleteReport?id=<%=r.getId()%>"
-									class="btn btn-outline-danger btn-sm"
-									onclick="return confirm('Are you sure you want to delete this report?');">
-									Delete </a>
-
-								<!-- Send / Resend -->
-								<form action="sendReport" method="post" class="m-0">
-									<input type="hidden" name="id" value="<%=r.getId()%>">
-									<button type="submit" class="btn btn-outline-primary btn-sm">
-										<%=r.isEmailSent() ? "Resend" : "Send"%>
-									</button>
-								</form>
-
-								<!-- Mark as Delivered -->
+						<%
+						int count = 1;
+						if (list != null) {
+							for (Report r : list) {
+						%>
+						<tr>
+							<td><%=count++%></td>
+							<td><%=r.getPatientId()%></td>
+							<td><%=r.getPatientName()%></td>
+							<td><%=r.getReportName()%></td>
+							<td><%=r.getReportDate()%></td>
+							<td>
 								<%
-								String sts = r.getStatus();
-								if ("Completed".equalsIgnoreCase(sts)) {
-								%>
-								<form action="updateReportStatus" method="post" class="m-0">
-									<input type="hidden" name="id" value="<%=r.getId()%>">
-									<button type="submit" class="btn btn-outline-success btn-sm">
-										Mark as Delivered</button>
-								</form>
-								<%
+								String status = r.getStatus();
+								String badgeClass = "bg-secondary";
+								if ("Pending".equalsIgnoreCase(status)) {
+									badgeClass = "bg-warning text-dark";
+								} else if ("Completed".equalsIgnoreCase(status)) {
+									badgeClass = "bg-primary";
+								} else if ("Delivered".equalsIgnoreCase(status)) {
+									badgeClass = "bg-success";
 								}
-								%>
+								%> <span class="badge rounded-pill <%=badgeClass%>"> <%=status%>
+							</span>
+							</td>
 
-							</div>
-						</td>
-					</tr>
-				</tbody>
+							<td>
+								<div class="actions-wrap">
 
-				<%
-				}
-				}
-				%>
+									<!-- Download -->
+									<a href="downloadReport?file=<%=r.getReportPath()%>"
+										class="btn btn-outline-success btn-sm"> <i
+										class="fa-solid fa-download"></i><span>Download</span>
+									</a>
 
-			</table>
+									<!-- Delete -->
+									<a href="deleteReport?id=<%=r.getId()%>"
+										class="btn btn-outline-danger btn-sm"
+										onclick="return confirm('Are you sure you want to delete this report?');">
+										<i class="fa-solid fa-trash"></i><span>Delete</span>
+									</a>
+
+									<!-- Send / Resend -->
+									<form action="sendReport" method="post" class="m-0">
+										<input type="hidden" name="id" value="<%=r.getId()%>">
+										<button type="submit" class="btn btn-outline-primary btn-sm">
+											<i class="fa-solid fa-paper-plane"></i><span> <%=r.isEmailSent() ? "Resend" : "Send"%>
+											</span>
+										</button>
+									</form>
+
+									<!-- Mark as Delivered -->
+									<%
+									String sts = r.getStatus();
+									if ("Completed".equalsIgnoreCase(sts)) {
+									%>
+									<form action="updateReportStatus" method="post" class="m-0">
+										<input type="hidden" name="id" value="<%=r.getId()%>">
+										<button type="submit" class="btn btn-outline-success btn-sm">
+											<i class="fa-solid fa-circle-check"></i><span>Delivered</span>
+										</button>
+									</form>
+									<%
+									}
+									%>
+
+								</div>
+							</td>
+						</tr>
+
+						<%
+						}
+						}
+						%>
+					</tbody>
+
+				</table>
+			</div>
+
+			<div class="pagination-wrap">
+				<nav aria-label="Reports pagination">
+					<ul class="pagination justify-content-center mb-0">
+
+						<%
+						if (totalReport < 15) {
+
+						} else {
+							for (int i = 0, j = 1; i <= totalReport; i = i + 15, j++) {
+						%>
+
+						<li class="page-item active"><a class="page-link"
+							href="<%=request.getContextPath()%>/viewAllReportsByOffset?offset=<%=i%>"><%=j%></a></li>
+						<%
+						}
+						}
+						%>
+					</ul>
+				</nav>
+			</div>
 		</div>
 	</div>
 
 	<script>
-		setTimeout(function () {
-		let alert = document.getElementById("alertMsg");
-			if (alert) {
-				alert.classList.remove("show");
-				alert.classList.add("fade");
-				setTimeout(() => alert.remove(), 500);
-			}
-		}, 3000); // 3 seconds
-	</script>
+														setTimeout(function () {
+															let alert = document.getElementById("alertMsg");
+															if (alert) {
+																alert.classList.remove("show");
+																alert.classList.add("fade");
+																setTimeout(() => alert.remove(), 500);
+															}
+														}, 3000); // 3 seconds
+													</script>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>

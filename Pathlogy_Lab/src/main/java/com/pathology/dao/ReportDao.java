@@ -41,8 +41,36 @@ public class ReportDao {
 
 		try (Connection con = DBConnection.getConnection();
 				PreparedStatement pst = con.prepareStatement(
-						"SELECT r.*, p.patient_name FROM reports r JOIN patients p ON r.patient_id = p.patient_uid")) {
+						"SELECT r.*, p.patient_name FROM reports r JOIN patients p ON r.patient_id = p.patient_uid LIMIT 15 OFFSET 0")) {
 
+			ResultSet rs = pst.executeQuery();
+
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String patientId = rs.getString("patient_id");
+				String report = rs.getString("report_name");
+				String path = rs.getString("file_path");
+				Date dt = rs.getDate("upload_date");
+				String status = rs.getString("status");
+				boolean emailSent = rs.getBoolean("email_sent");
+				String patientName = rs.getString("patient_name");
+
+				list.add(new Report(id, patientId, report, path, dt, status, patientName, emailSent));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public List<Report> reportList(int offset) {
+		List<Report> list = new LinkedList<Report>();
+
+		try (Connection con = DBConnection.getConnection();
+				PreparedStatement pst = con.prepareStatement(
+						"SELECT r.*, p.patient_name FROM reports r JOIN patients p ON r.patient_id = p.patient_uid LIMIT 15 OFFSET ?")) {
+			pst.setInt(1, offset);
 			ResultSet rs = pst.executeQuery();
 
 			while (rs.next()) {
@@ -69,7 +97,7 @@ public class ReportDao {
 
 		try (Connection con = DBConnection.getConnection();
 				PreparedStatement pst = con.prepareStatement(
-						"SELECT r.*, p.patient_name FROM reports r JOIN patients p ON r.patient_id = p.patient_uid WHERE r.patient_id = ?")) {
+						"SELECT r.*, p.patient_name FROM reports r JOIN patients p ON r.patient_id = p.patient_uid WHERE r.patient_id = ? LIMIT 15 OFFSET 0")) {
 
 			pst.setString(1, pId);
 
@@ -189,30 +217,30 @@ public class ReportDao {
 		String query = "SELECT r.*, p.patient_name FROM reports r JOIN patients p ON r.patient_id = p.patient_uid WHERE 1=1";
 
 		if (search != null && !search.isEmpty()) {
-			query += " AND (report_name LIKE ? OR patient_id LIKE ? OR status LIKE ?)";
+			query += " AND (report_name LIKE ? OR patient_id LIKE ? OR status LIKE ? LIMIT 15 OFFSET 0)";
 		}
 
 		if (type != null && !type.isEmpty()) {
-			query += " AND report_name = ?";
+			query += " AND report_name = ? LIMIT 15 OFFSET 0";
 		}
 
 		if (status != null && !status.isEmpty()) {
-			query += " AND status = ?";
+			query += " AND status = ? LIMIT 15 OFFSET 0";
 		}
 
 		if (sort != null && !sort.isEmpty()) {
 			switch (sort) {
 			case "date_desc":
-				query += " ORDER BY upload_date DESC";
+				query += " ORDER BY upload_date DESC LIMIT 15 OFFSET 0";
 				break;
 			case "date_asc":
-				query += " ORDER BY upload_date ASC";
+				query += " ORDER BY upload_date ASC LIMIT 15 OFFSET 0";
 				break;
 			case "name_asc":
-				query += " ORDER BY report_name ASC";
+				query += " ORDER BY report_name ASC LIMIT 15 OFFSET 0";
 				break;
 			case "name_desc":
-				query += " ORDER BY report_name DESC";
+				query += " ORDER BY report_name DESC LIMIT 15 OFFSET 0";
 				break;
 			}
 		}
@@ -264,7 +292,7 @@ public class ReportDao {
 
 		try (Connection con = DBConnection.getConnection();
 				PreparedStatement pst = con.prepareStatement(
-						"SELECT r.id AS report_id, p.patient_name, r.report_name, r.file_path, r.status, r.upload_date FROM patients p JOIN reports r ON p.patient_uid = r.patient_id WHERE p.patient_email = ?")) {
+						"SELECT r.id AS report_id, p.patient_name, r.report_name, r.file_path, r.status, r.upload_date FROM patients p JOIN reports r ON p.patient_uid = r.patient_id WHERE p.patient_email = ? LIMIT 15 OFFSET 0")) {
 
 			pst.setString(1, email);
 
@@ -292,7 +320,7 @@ public class ReportDao {
 
 		try (Connection con = DBConnection.getConnection();
 				PreparedStatement pst = con.prepareStatement(
-						"SELECT p.patient_email, r.file_path FROM patients p JOIN reports r ON p.patient_uid = r.patient_id WHERE r.id = ?")) {
+						"SELECT p.patient_email, r.file_path FROM patients p JOIN reports r ON p.patient_uid = r.patient_id WHERE r.id = ? LIMIT 15 OFFSET 0")) {
 			pst.setInt(1, id);
 
 			ResultSet rs = pst.executeQuery();
