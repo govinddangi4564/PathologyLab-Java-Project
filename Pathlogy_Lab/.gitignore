@@ -22,3 +22,5 @@ Thumbs.db
 # Temp files
 *.tmp
 *.log
+/.apt_generated/
+/.apt_generated_tests/

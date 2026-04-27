@@ -18,8 +18,8 @@ public class EmailService {
 
 		ResourceBundle bundle = ResourceBundle.getBundle("config");
 
-		String fromEmail = bundle.getString("email.from");
-		String appPass = bundle.getString("email.password");
+		String fromEmail = System.getenv("EMAIL_FROM") != null ? System.getenv("EMAIL_FROM") : bundle.getString("email.from");
+		String appPass = System.getenv("EMAIL_PASSWORD") != null ? System.getenv("EMAIL_PASSWORD") : bundle.getString("email.password");
 		String smtpHost = bundle.getString("email.smtp.host");
 		String smtpPort = bundle.getString("email.smtp.port");
 

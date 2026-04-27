@@ -47,7 +47,7 @@ public class UploadReport extends HttpServlet {
 		String title = request.getParameter("reportName");
 
 		Part pt = request.getPart("reportFile");
-		String path = "D:\\All Codes\\Java FullStack Projects\\Pathlogy_Lab\\Pathlogy_Lab\\src\\main\\webapp\\reports\\";
+		String path = System.getenv("REPORTS_PATH") != null ? System.getenv("REPORTS_PATH") : getServletContext().getRealPath("/reports/");
 
 		File uploadDir = new File(path);
 		if (!uploadDir.exists()) {

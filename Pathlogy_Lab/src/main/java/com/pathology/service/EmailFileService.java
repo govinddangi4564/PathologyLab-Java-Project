@@ -21,8 +21,8 @@ public class EmailFileService {
 
 	private static final ResourceBundle bundle = ResourceBundle.getBundle("config");
 
-	private static final String FROM_EMAIL = bundle.getString("email.from");
-	private static final String APP_PASS = bundle.getString("email.password");
+	private static final String FROM_EMAIL = System.getenv("EMAIL_FROM") != null ? System.getenv("EMAIL_FROM") : bundle.getString("email.from");
+	private static final String APP_PASS = System.getenv("EMAIL_PASSWORD") != null ? System.getenv("EMAIL_PASSWORD") : bundle.getString("email.password");
 	private static final String SMTP_HOST = bundle.getString("email.smtp.host");
 	private static final String SMTP_PORT = bundle.getString("email.smtp.port");
 

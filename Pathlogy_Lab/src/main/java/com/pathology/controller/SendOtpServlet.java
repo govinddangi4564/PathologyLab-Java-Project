@@ -79,7 +79,7 @@ public class SendOtpServlet extends HttpServlet {
 			actionText = "reset your password";
 		}
 
-		String body = OtpTemplate.getTemplate(otp, actionText);
+		String body = OtpTemplate.getTemplate(actionText, otp);
 
 		try {
 			EmailService.sendEmail(email, subject, body);

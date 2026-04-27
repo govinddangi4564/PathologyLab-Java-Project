@@ -1,3 +1,4 @@
+<%@page import="com.pathology.dao.AppointmentDao"%>
 <%@page import="com.pathology.model.Appointment"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -262,6 +263,11 @@ body {
 
 	<%
 	List<Appointment> list = (List<Appointment>) request.getAttribute("appointmentList");
+	%>
+	
+	<%
+	AppointmentDao dao = new AppointmentDao();
+	
 	%>
 
 	<div class="main-content">
