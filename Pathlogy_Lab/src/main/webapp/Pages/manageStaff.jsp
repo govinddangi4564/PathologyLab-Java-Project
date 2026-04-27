@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+
 <head>
 <meta charset="UTF-8">
 <title>Manage Patients</title>
@@ -28,12 +29,11 @@
 	href="<%=request.getContextPath()%>/Css/app-theme.css">
 </head>
 
-<body data-admin-page="patients">
+<body data-admin-page="manageStaff">
 	<%@ include file="Components/auth.jsp"%>
 
 	<%
 	String role = (String) mySession.getAttribute("role");
-
 	if ("ADMIN".equals(role)) {
 	%>
 	<jsp:include page="adminSidebar.jsp" />

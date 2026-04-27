@@ -8,15 +8,17 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+import com.pathology.dao.AppointmentDao;
 import com.pathology.dao.PatientDao;
 import com.pathology.dao.ReportDao;
 import com.pathology.dao.UserDao;
+import com.pathology.model.Appointment;
 import com.pathology.model.Patient;
 import com.pathology.model.Report;
 import com.pathology.model.User;
 
 @WebServlet(urlPatterns = { "/viewPatients", "/viewAllPatientByOffset", "/viewAllReports", "/viewReport",
-		"/viewAllReportsByOffset", "/viewStaff" })
+		"/viewAllReportsByOffset", "/viewStaff", "/viewAppointmentReport" })
 public class ViewReports extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -75,6 +77,14 @@ public class ViewReports extends HttpServlet {
 
 			request.setAttribute("patientList", list);
 			request.getRequestDispatcher("Pages/viewAllPatients.jsp").forward(request, response);
+
+		} else if (path.equals("/viewAppointmentReport")) {
+
+			AppointmentDao dao = new AppointmentDao();
+			List<Appointment> list = dao.viewAppointment();
+
+			request.setAttribute("appointmentList", list);
+			request.getRequestDispatcher("Pages/viewAppointment.jsp").forward(request, response);
 		}
 	}
 }
