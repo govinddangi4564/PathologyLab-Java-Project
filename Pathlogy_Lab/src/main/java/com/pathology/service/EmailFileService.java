@@ -23,8 +23,11 @@ public class EmailFileService {
 	static {
 		try {
 			bundle = ResourceBundle.getBundle("config");
-		} catch (Exception e) {}
+		} catch (Exception e) {
+		}
 	}
+
+	private static final String SENDER_NAME = getProp("email.from.name", "PathologyLab");
 
 	private static String getProp(String key, String defaultValue) {
 		if (bundle != null && bundle.containsKey(key)) {
@@ -33,8 +36,11 @@ public class EmailFileService {
 		return defaultValue;
 	}
 
-	private static final String FROM_EMAIL = System.getenv("EMAIL_FROM") != null ? System.getenv("EMAIL_FROM") : getProp("email.from", "");
-	private static final String APP_PASS = System.getenv("EMAIL_PASSWORD") != null ? System.getenv("EMAIL_PASSWORD") : getProp("email.password", "");
+	private static final String FROM_EMAIL = System.getenv("EMAIL_FROM") != null ? System.getenv("EMAIL_FROM")
+			: getProp("email.from", "");
+	private static final String REPLY_TO_EMAIL = getProp("email.reply.to", FROM_EMAIL);
+	private static final String APP_PASS = System.getenv("EMAIL_PASSWORD") != null ? System.getenv("EMAIL_PASSWORD")
+			: getProp("email.password", "");
 	private static final String SMTP_HOST = getProp("email.smtp.host", "smtp.gmail.com");
 	private static final String SMTP_PORT = getProp("email.smtp.port", "587");
 
@@ -63,7 +69,8 @@ public class EmailFileService {
 
 			// Message
 			MimeMessage message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(FROM_EMAIL));
+			message.setFrom(new InternetAddress(FROM_EMAIL, SENDER_NAME));
+			message.setReplyTo(InternetAddress.parse(REPLY_TO_EMAIL));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail));
 			message.setSubject(subject);
 
