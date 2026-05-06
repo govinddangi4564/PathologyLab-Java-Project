@@ -29,4 +29,9 @@ public class Patient {
 		this.patientMobile = patientMobile;
 	}
 
+	public Patient(String patientId) {
+		super();
+		this.patientId = patientId;
+	}
+
 }

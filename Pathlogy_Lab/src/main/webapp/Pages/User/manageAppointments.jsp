@@ -1,3 +1,5 @@
+<%@page import="com.pathology.model.Patient"%>
+<%@page import="com.pathology.dao.PatientDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -33,6 +35,13 @@
 
 	<%
 	String role = (String) mySession.getAttribute("role");
+
+	int userId = u.getId();
+
+	PatientDao dao = new PatientDao();
+	Patient p = dao.getPatientId(userId);
+
+	int patientId = p.getId();
 
 	if ("USER".equals(role)) {
 	%>
@@ -85,7 +94,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="col-md-6">
 				<div class="card shadow border-0 card-hover h-100">
 					<div class="card-body text-center">
@@ -93,9 +102,11 @@
 						<i class="bi bi-people-fill fs-1 text-primary"></i>
 
 						<h4 class="mt-3">View My Appointment</h4>
-						<p class="text-muted">View Appointment, Change time-slot, Date, Location and Cancel Appointment.</p>
+						<p class="text-muted">View Appointment, Change time-slot,
+							Date, Location and Cancel Appointment.</p>
 
-						<a href="<%=request.getContextPath()%>/viewMyAppointment"
+						<a
+							href="<%=request.getContextPath()%>/viewMyAppointment?id=<%=patientId%>"
 							class="btn btn-primary px-4"> <i class="bi bi-eye"></i> View
 							Patients
 						</a>

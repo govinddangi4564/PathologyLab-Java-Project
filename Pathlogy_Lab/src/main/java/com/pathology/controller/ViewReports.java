@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -18,7 +20,7 @@ import com.pathology.model.Report;
 import com.pathology.model.User;
 
 @WebServlet(urlPatterns = { "/viewPatients", "/viewAllPatientByOffset", "/viewAllReports", "/viewReport",
-		"/viewAllReportsByOffset", "/viewStaff", "/viewAppointmentReport" })
+		"/viewAllReportsByOffset", "/viewStaff", "/viewAppointmentReport", "/viewMyAppointment" })
 public class ViewReports extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -81,12 +83,23 @@ public class ViewReports extends HttpServlet {
 		} else if (path.equals("/viewAppointmentReport")) {
 
 			String key = request.getParameter("key");
-			
+
 			AppointmentDao dao = new AppointmentDao();
 			List<Appointment> list = dao.viewAppointment(key);
 
 			request.setAttribute("appointmentList", list);
 			request.getRequestDispatcher("Pages/viewAppointment.jsp").forward(request, response);
+
+		} else if (path.equals("/viewMyAppointment")) {
+			
+			int id = Integer.parseInt(request.getParameter("id"));
+
+			AppointmentDao dao = new AppointmentDao();
+			List<Appointment> list = dao.myAppointment(id);
+
+			request.setAttribute("myAppointment", list);
+			request.getRequestDispatcher("Pages/User/myAppointment.jsp").forward(request, response);
+
 		}
 	}
 }

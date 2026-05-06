@@ -49,4 +49,19 @@ public class Appointment {
 		this.mode = mode;
 	}
 
+	public Appointment(int id, String patientId, String testName, Date appointmentDate, LocalTime appointmentTime,
+			String labLocation, String status, String priority, int token, String mode) {
+		super();
+		this.id = id;
+		this.patientId = patientId;
+		this.testName = testName;
+		this.appointmentDate = appointmentDate;
+		this.appointmentTime = appointmentTime;
+		this.labLocation = labLocation;
+		this.status = status;
+		this.priority = priority;
+		this.token = token;
+		this.mode = mode;
+	}
+
 }

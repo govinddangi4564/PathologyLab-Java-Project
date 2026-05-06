@@ -147,4 +147,23 @@ public class PatientDao {
 		return list;
 	}
 
+	public Patient getPatientId(int userId) {
+		Patient p = null;
+
+		try (Connection con = DBConnection.getConnection();
+				PreparedStatement pst = con.prepareStatement("SELECT patient_uid FROM patients WHERE user_id = ?")) {
+			pst.setInt(1, userId);
+
+			ResultSet rs = pst.executeQuery();
+
+			if (rs.next()) {
+				p = new Patient(rs.getString("patient_uid"));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return p;
+	}
+
 }

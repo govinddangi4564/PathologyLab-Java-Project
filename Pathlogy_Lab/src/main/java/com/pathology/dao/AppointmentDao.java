@@ -394,4 +394,42 @@ public class AppointmentDao {
 
 		return list;
 	}
+
+	public List<Appointment> myAppointment(int id) {
+		List<Appointment> list = new LinkedList<Appointment>();
+
+		try (Connection con = DBConnection.getConnection();
+				PreparedStatement pst = con.prepareStatement("SELECT * FROM appointments")) {
+
+			pst.setInt(1, id);
+
+			ResultSet rs = pst.executeQuery();
+
+			while (rs.next()) {
+				int id1 = rs.getInt("id");
+				String pId = rs.getString("patient_id");
+				String test = rs.getString("test_name");
+				Date apDate = rs.getDate("appointment_date");
+
+				String apTime = rs.getString("time_slot");
+				LocalTime time = null;
+
+				if (apTime != null && !apTime.isEmpty()) {
+					time = LocalTime.parse(apTime);
+				}
+
+				String loc = rs.getString("lab_location");
+				String sts = rs.getString("status");
+				String priority = rs.getString("priority");
+				int token = rs.getInt("token_no");
+				String mode = rs.getString("booking_type");
+
+				list.add(new Appointment(id1, pId, test, apDate, time, loc, sts, priority, token, mode));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 }
