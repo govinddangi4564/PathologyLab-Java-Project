@@ -1,4 +1,4 @@
-﻿<%@page import="com.pathology.dao.PatientDao"%>
+<%@page import="com.pathology.dao.PatientDao"%>
 <%@page import="com.pathology.model.Patient"%>
 <%@page import="java.util.List"%>
 <%@page import="com.pathology.model.Report"%>

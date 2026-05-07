@@ -1,4 +1,4 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -31,6 +31,7 @@
 
 <body data-admin-page="manageStaff">
 	<%@ include file="Components/auth.jsp"%>
+	<%@ include file="Components/loader.jsp"%>
 
 	<%
 	String role = (String) mySession.getAttribute("role");
@@ -84,6 +85,7 @@
 						<p class="text-muted">View Staff id, name, email</p>
 
 						<a href="<%=request.getContextPath()%>/viewStaff"
+							onclick="showLoader()"
 							class="btn btn-primary px-4"> <i class="bi bi-eye"></i> View
 							Staff
 						</a>

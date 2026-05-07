@@ -27,7 +27,15 @@
 </head>
 
 <body data-user-page="dashboard">
-	<%@ include file="userSidebar.jsp"%>
+
+	<%@ include file="../Components/auth.jsp"%>
+	<%@ include file="../Components/loader.jsp"%>
+
+	<%
+	String role = (String) mySession.getAttribute("role");
+	if ("USER".equals(role)) {
+	%>
+	<jsp:include page="userSidebar.jsp" />
 
 	<!-- Main Content -->
 	<div class="main-content">
@@ -102,6 +110,14 @@
 			document.getElementById('userSidebar').classList.toggle('active');
 		}
 	</script>
+
+	<%
+	} else {
+	response.sendRedirect(request.getContextPath() + "/Pages/unauthorizedUser.jsp");
+	return;
+	}
+	%>
+
 </body>
 
 </html>

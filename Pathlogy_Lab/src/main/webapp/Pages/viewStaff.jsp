@@ -109,7 +109,7 @@ body {
 	href="<%=request.getContextPath()%>/Css/app-theme.css">
 </head>
 
-<body data-admin-page="reports">
+<body data-admin-page="manageStaff">
 
 	<%@ include file="Components/auth.jsp"%>
 	<%@ include file="Components/loader.jsp"%>

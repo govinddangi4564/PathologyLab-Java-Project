@@ -1,4 +1,4 @@
-﻿<%@page
+<%@page
 	import="org.apache.jasper.compiler.NewlineReductionServletWriter"%>
 <%@page import="com.pathology.model.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -50,6 +50,7 @@
 			data-admin-link="upload"> <i class="fa-solid fa-cloud-arrow-up"></i>
 			Upload Report
 		</a> <a href="<%=request.getContextPath()%>/viewAllReports"
+			onclick="showLoader()"
 			data-admin-link="reports"> <i class="fa-solid fa-file-lines"></i>
 			View Reports
 		</a> <span class="nav-label">Management</span> <a
@@ -61,6 +62,7 @@
 			Manage Staff
 		</a> <a
 			href="<%=request.getContextPath()%>/viewAppointmentReport?key=todayOrAfter"
+			onclick="showLoader()"
 			data-admin-link="appointments"> <i class="fa-solid fa-file-lines"></i>
 			Appointments
 		</a>

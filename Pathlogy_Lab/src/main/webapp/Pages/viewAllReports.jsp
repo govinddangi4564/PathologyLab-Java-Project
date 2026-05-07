@@ -1,4 +1,4 @@
-﻿<%@page import="com.pathology.dao.ReportDao"%>
+<%@page import="com.pathology.dao.ReportDao"%>
 <%@page import="jakarta.websocket.Session"%>
 <%@page import="java.util.List"%>
 <%@page import="com.pathology.model.Report"%>

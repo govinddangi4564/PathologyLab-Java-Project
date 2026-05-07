@@ -1,4 +1,4 @@
-﻿<%@page import="com.pathology.model.User"%>
+<%@page import="com.pathology.model.User"%>
 <%@page import="com.pathology.dao.ReportDao"%>
 <%@page import="com.pathology.dao.PatientDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -212,6 +212,7 @@ to {
 <body data-staff-page="dashboard">
 
 	<%@ include file="../Components/auth.jsp"%>
+	<%@ include file="../Components/loader.jsp"%>
 
 	<%
 	String role = (String) mySession.getAttribute("role");
@@ -312,12 +313,17 @@ to {
 				<div class="panel">
 					<h5>Quick Actions</h5>
 					<div class="quick-actions">
-						<a href="<%=request.getContextPath()%>/Pages/uploadReport.jsp"
-							class="btn btn-success">Upload Report</a> <a
-							href="<%=request.getContextPath()%>/viewAllReports"
-							class="btn btn-outline-primary">Review Reports</a> <a
-							href="<%=request.getContextPath()%>/viewPatients"
-							class="btn btn-outline-dark">View Patients</a> <a
+							<a href="<%=request.getContextPath()%>/Pages/uploadReport.jsp"
+								class="btn btn-upload btn-sm"><i
+								class="fa-solid fa-upload"></i> Upload Report</a> <a
+								href="<%=request.getContextPath()%>/viewAllReports"
+								onclick="showLoader()"
+								class="btn btn-review btn-sm"><i
+								class="fa-solid fa-file-medical"></i> Review Reports</a> <a
+								href="<%=request.getContextPath()%>/viewPatients"
+								onclick="showLoader()"
+								class="btn btn-patients btn-sm"><i class="fa-solid fa-users"></i>
+								Patient List</a> <a
 							href="<%=request.getContextPath()%>/Pages/changePassword.jsp"
 							class="btn btn-outline-secondary">Change Password</a>
 					</div>

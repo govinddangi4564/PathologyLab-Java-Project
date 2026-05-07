@@ -213,6 +213,7 @@ body {
 
 <body data-user-page="appointments">
 	<%@ include file="../Components/auth.jsp"%>
+	<%@ include file="../Components/loader.jsp"%>
 
 	<%
 	String role = (String) mySession.getAttribute("role");
@@ -298,8 +299,6 @@ body {
 			</div>
 
 		</div>
-
-	</div>
 
 	</div>
 

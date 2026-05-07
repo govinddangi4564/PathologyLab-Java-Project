@@ -1,4 +1,4 @@
-﻿<%@page import="com.pathology.model.User"%>
+<%@page import="com.pathology.model.User"%>
 <%@page import="com.pathology.dao.UserDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -130,6 +130,7 @@ h1, h2, h3, h4, h5 {
 	String work = (String) session.getAttribute("work");
 	%>
 
+	<%@ include file="Components/loader.jsp"%>
 	<div class="auth-wrap">
 
 		<div class="container">

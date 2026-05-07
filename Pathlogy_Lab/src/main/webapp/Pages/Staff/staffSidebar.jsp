@@ -1,4 +1,4 @@
-﻿<%@page import="com.pathology.model.User"%>
+<%@page import="com.pathology.model.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -48,6 +48,7 @@
 			data-staff-link="upload"> <i class="fa-solid fa-cloud-arrow-up"></i>
 			Upload Report
 		</a> <a href="<%=request.getContextPath()%>/viewAllReports"
+			onclick="showLoader()"
 			data-staff-link="reports"> <i class="fa-solid fa-file-medical"></i>
 			View Reports
 		</a> <span class="nav-label">Management</span> <a
@@ -56,6 +57,7 @@
 			Patients
 		</a> <a
 			href="<%=request.getContextPath()%>/viewAppointmentReport?key=todayOrAfter"
+			onclick="showLoader()"
 			data-admin-link="appointments"> <i class="fa-solid fa-file-lines"></i>
 			Appointments
 		</a> <a href="<%=request.getContextPath()%>/Pages/changePassword.jsp"

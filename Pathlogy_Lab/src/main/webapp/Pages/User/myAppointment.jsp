@@ -440,6 +440,13 @@ body {
 <body data-user-page="appointments">
 
 	<%@ include file="../Components/auth.jsp"%>
+	<%@ include file="../Components/loader.jsp"%>
+	<script>
+		showLoader();
+	</script>
+	<%
+	out.flush();
+	%>
 
 	<%
 	List<Appointment> list = (List<Appointment>) request.getAttribute("myAppointment");
@@ -647,7 +654,6 @@ body {
 		<%
 		}
 		%>
-	</div>
 	</div>
 
 	<%

@@ -35,6 +35,7 @@
 </head>
 
 <body>
+	<%@ include file="Pages/Components/loader.jsp"%>
 
 	<nav class="navbar navbar-expand-lg sticky-top top-nav">
 		<div class="container py-2">

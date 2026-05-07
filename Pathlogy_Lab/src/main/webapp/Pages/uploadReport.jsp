@@ -1,4 +1,4 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -228,6 +228,7 @@ to {
 <body data-admin-page="upload">
 
 	<%@ include file="Components/auth.jsp"%>
+	<%@ include file="Components/loader.jsp"%>
 
 	<%
 	String role = (String) mySession.getAttribute("role");

@@ -1,4 +1,4 @@
-﻿<%@page import="com.pathology.model.Report"%>
+<%@page import="com.pathology.model.Report"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -206,7 +206,14 @@ body {
 
 <body data-user-page="reports">
 
-	<%@ include file="userSidebar.jsp"%>
+	<%@ include file="../Components/auth.jsp"%>
+	<%@ include file="../Components/loader.jsp"%>
+
+	<%
+	String role = (String) mySession.getAttribute("role");
+	if ("USER".equals(role)) {
+	%>
+	<jsp:include page="userSidebar.jsp" />
 
 	<%
 	List<Report> list = (List<Report>) request.getAttribute("reportList");
@@ -335,6 +342,13 @@ body {
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="../Js/admin-dashboard.js"></script>
+
+	<%
+	} else {
+	response.sendRedirect(request.getContextPath() + "/Pages/unauthorizedUser.jsp");
+	return;
+	}
+	%>
 </body>
 
 </html>
