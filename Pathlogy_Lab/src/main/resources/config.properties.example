@@ -1,14 +1,14 @@
 # Database Configuration (Overrides by Environment Variables: DB_URL, DB_USER, DB_PASSWORD)
-db.url=jdbc:mysql://gateway01.ap-southeast-1.prod.aws.tidbcloud.com:4000/pathology_lab?sslMode=VERIFY_IDENTITY&enabledTLSProtocols=TLSv1.2,TLSv1.3
+db.url=jdbc:mysql://YOUR_DB_HOST:4000/pathology_lab?sslMode=VERIFY_IDENTITY&enabledTLSProtocols=TLSv1.2,TLSv1.3
 db.driver=com.mysql.cj.jdbc.Driver
-db.username=oQHqYYQRoEF96iL.root
-db.password=wxJneyy46qOcK0nG
+db.username=YOUR_DB_USERNAME
+db.password=YOUR_DB_PASSWORD
 
 # Email Configuration (Overrides by Environment Variables: EMAIL_FROM, EMAIL_PASSWORD)
-email.from=govinddangi5811@gmail.com
+email.from=your-email@gmail.com
 email.from.name=PathologyLab
 email.reply.to=noreply@pathologylab.com
-email.password=jrhcujbnbnkhzdlf
+email.password=YOUR_APP_PASSWORD
 email.smtp.host=smtp.gmail.com
 email.smtp.port=587
 
